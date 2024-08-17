@@ -7,5 +7,10 @@ export default {
     format: 'es',
     sourcemap: true,
   },
-  plugins: [typescript()],
+  plugins: [
+    typescript({
+      tsconfig: '../../tsconfig.json',
+    }),
+  ],
+  external: ['node:fs', 'node:child_process', 'node:path', 'node:url'],
 };
