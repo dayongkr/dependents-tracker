@@ -10,13 +10,16 @@ export async function getImportLines(repositoryOwner: string, repositoryName: st
   const tmpDirName = path.resolve(__dirname, './.tmp');
   const repoDirName = path.resolve(tmpDirName, repositoryName);
 
-  // .tmp 디렉토리가 없으면 생성
   if (!fs.existsSync(tmpDirName)) {
     fs.mkdirSync(tmpDirName);
   }
 
+  if (fs.existsSync(repoDirName)) {
+    fs.rmSync(repoDirName, { recursive: true });
+  }
+
   await execSync(`git clone https://github.com/${repositoryOwner}/${repositoryName}.git --depth 1`, {
-    stdio: 'inherit',
+    stdio: 'ignore',
     cwd: tmpDirName,
   });
 
@@ -33,15 +36,22 @@ export async function getImportLines(repositoryOwner: string, repositoryName: st
     }
 
     const isDir = fs.lstatSync(fileName).isDirectory();
-
-    if (isDir) {
-      const subFile = fs.readdirSync(fileName).map((subFile) => path.resolve(fileName, subFile));
-      fileNames.push(...subFile);
-    } else {
-      const fileContent = fs.readFileSync(fileName, 'utf-8');
-      const matchedLines = fileContent.match(importRegExp);
-      if (matchedLines) {
-        importLines.push(...matchedLines);
+    try {
+      if (isDir) {
+        const subFile = fs.readdirSync(fileName).map((subFile) => path.resolve(fileName, subFile));
+        fileNames.push(...subFile);
+      } else {
+        const fileContent = fs.readFileSync(fileName, 'utf-8');
+        const matchedLines = fileContent.match(importRegExp);
+        if (matchedLines) {
+          importLines.push(...matchedLines);
+        }
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      if (e && e.code === 'EISDIR') {
+        const subFile = fs.readdirSync(fileName).map((subFile) => path.resolve(fileName, subFile));
+        fileNames.push(...subFile);
       }
     }
   }
