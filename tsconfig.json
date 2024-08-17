@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "module": "esnext",
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "NodeNext"
+  },
+  "include": ["packages/**/*.ts", "packages/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
