@@ -3,12 +3,17 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 
-export async function getImportLines(repositoryOwner: string, repositoryName: string, packageName = repositoryName) {
+export async function getImportLines(
+  dependent: string,
+  packageName: string,
+  cache: { hash: string; imports: string[] }
+): Promise<{ hash: string; imports: string[] }> {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
   const tmpDirName = path.resolve(__dirname, './.tmp');
-  const repoDirName = path.resolve(tmpDirName, repositoryName);
+  const dependentRepo = dependent.split('/')[1];
+  const repoDirName = path.resolve(tmpDirName, dependentRepo);
 
   if (!fs.existsSync(tmpDirName)) {
     fs.mkdirSync(tmpDirName);
@@ -18,9 +23,23 @@ export async function getImportLines(repositoryOwner: string, repositoryName: st
     fs.rmSync(repoDirName, { recursive: true });
   }
 
-  await execSync(`git clone https://github.com/${repositoryOwner}/${repositoryName}.git --depth 1`, {
+  await execSync(`git clone https://github.com/${dependent}.git --depth=1 --no-checkout --filter=blob:none`, {
     stdio: 'ignore',
     cwd: tmpDirName,
+  });
+
+  const headHash = await execSync('git rev-parse HEAD', {
+    cwd: repoDirName,
+    encoding: 'utf-8',
+  }).trim();
+
+  if (cache && cache.hash === headHash) {
+    return cache;
+  }
+
+  await execSync(`git checkout`, {
+    stdio: 'ignore',
+    cwd: repoDirName,
   });
 
   const fileNames = fs.readdirSync(repoDirName).map((file) => path.resolve(repoDirName, file));
@@ -59,5 +78,5 @@ export async function getImportLines(repositoryOwner: string, repositoryName: st
   // remove .tmp directory
   fs.rmSync(repoDirName, { recursive: true });
 
-  return importLines;
+  return { hash: headHash, imports: importLines };
 }

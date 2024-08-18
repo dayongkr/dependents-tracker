@@ -1,6 +1,6 @@
-export async function getDependents(repositoryOwner: string, repositoryName: string) {
+export async function getDependents(repositoryOwner: string, repositoryName: string): Promise<string[]> {
   let fetchUrl: string | null = `https://github.com/${repositoryOwner}/${repositoryName}/network/dependents`;
-  const dependents: { owner: string; name: string }[] = [];
+  const dependents: string[] = [];
 
   while (fetchUrl != null) {
     const dependentsPageRes = await fetch(fetchUrl);
@@ -13,16 +13,13 @@ export async function getDependents(repositoryOwner: string, repositoryName: str
     const dependentsElements = dependentsFirstPageText.split('data-test-id="dg-repo-pkg-dependent"').slice(1);
 
     for (const element of dependentsElements) {
-      const match = element.match(/href="\/([^\/]+)\/([^\/]+)"/);
+      const match = element.match(/href="\/([^/]+)\/([^/]+)"/);
 
       if (!match) {
         throw new Error('Failed to parse dependent element');
       }
 
-      dependents.push({
-        owner: match[1],
-        name: match[2],
-      });
+      dependents.push(`${match[1]}/${match[2]}`);
     }
 
     const matchedUrl = dependentsFirstPageText.match(
