@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { cn } from '@/libs/utils';
 import Link from 'next/link';
-import { Binoculars, Home } from 'lucide-react';
+import { Binoculars } from 'lucide-react';
 
 const pretendard = localFont({ src: '../fonts/PretendardVariable.woff2', display: 'swap' });
 
