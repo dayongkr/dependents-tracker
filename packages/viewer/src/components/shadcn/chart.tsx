@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import { NameType, Payload, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
 import { cn } from '@/libs/utils';
 
@@ -62,7 +61,7 @@ const ChartContainer = React.forwardRef<
 ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
+  const colorConfig = Object.entries(config).filter((item) => item[1].theme || item[1].color);
 
   if (!colorConfig.length) {
     return null;
