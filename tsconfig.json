@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "target": "ESNext",
     "module": "ESNext",
+    "target": "ES2022",
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "Bundler"
   },
   "include": ["packages/**/*.ts", "packages/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules, dist"]
 }
