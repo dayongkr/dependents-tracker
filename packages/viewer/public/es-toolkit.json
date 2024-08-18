@@ -1,14 +1,7 @@
 {
-  "RichDom2185/glam-mailer": [
-    "throttle"
-  ],
+  "RichDom2185/glam-mailer": ["throttle"],
   "Yunxj/countdown-app": [],
-  "chebread/nowplace": [
-    "size",
-    "isNil",
-    "isNotNil",
-    "omit"
-  ],
+  "chebread/nowplace": ["size", "isNil", "isNotNil", "omit"],
   "jlai/fitness-dashboard": [
     "head",
     "last",
@@ -35,141 +28,54 @@
     "groupBy",
     "sumBy"
   ],
-  "bertyhell/openwebcad": [
-    "isEqual",
-    "compact",
-    "compact",
-    "compact",
-    "compact"
-  ],
+  "bertyhell/openwebcad": ["isEqual", "compact", "compact", "compact", "compact"],
   "peterroe/un": [],
   "AVor0n/kardo": [],
-  "zerdos/spike.land": [
-    "debounce",
-    "debounce",
-    "debounce",
-    "debounce"
-  ],
-  "CynToolkit/cyn": [
-    "debounce"
-  ],
-  "jiwnchoi/tindervis": [
-    "debounce"
-  ],
-  "dnd-side-project/dnd-11th-8-frontend": [
-    "debounce"
-  ],
+  "zerdos/spike.land": ["debounce", "debounce", "debounce", "debounce"],
+  "CynToolkit/cyn": ["debounce"],
+  "jiwnchoi/tindervis": ["debounce"],
+  "dnd-side-project/dnd-11th-8-frontend": ["debounce"],
   "faner11/react-antd": [],
-  "dnd-side-project/dnd-9th-5-frontend": [
-    "delay",
-    "delay"
-  ],
+  "dnd-side-project/dnd-9th-5-frontend": ["delay", "delay"],
   "okeeffed/demo-git-worktree": [],
   "OlegShchavelev/ALTMobileWiki": [],
-  "wiirhan/vue3-vite-admin": [
-    "cloneDeep"
-  ],
+  "wiirhan/vue3-vite-admin": ["cloneDeep"],
   "tdawn0-0/grab": [],
-  "coderup2021/nestcms": [
-    "isEqual",
-    "uniqBy"
-  ],
-  "gbouteiller/astro-superforms": [
-    "isObjectLike"
-  ],
-  "jonogon/jonogon-mono": [
-    "pick",
-    "pick",
-    "pick",
-    "omit",
-    "pick",
-    "pick"
-  ],
+  "coderup2021/nestcms": ["isEqual", "uniqBy"],
+  "gbouteiller/astro-superforms": ["isObjectLike"],
+  "jonogon/jonogon-mono": ["pick", "pick", "pick", "omit", "pick", "pick"],
   "zhangjunjie-cn/zhangjunjie-cn.github.io": [],
   "NaoufalBtd/stocks-market-dashboard": [],
   "Dreamtowards/Elytra": [],
-  "Nexters/invi": [
-    "debounce",
-    "debounce",
-    "delay"
-  ],
+  "Nexters/invi": ["debounce", "debounce", "delay"],
   "i0rph/spotifycover.ebeb.be": [],
-  "joris-gallot/compare-tsc-diagnostics": [
-    "camelCase",
-    "startCase"
-  ],
-  "caleb531/personal-website": [
-    "keyBy",
-    "keyBy",
-    "groupBy",
-    "keyBy"
-  ],
-  "stellarhoof/macro-planning": [
-    "startCase",
-    "startCase",
-    "omitBy",
-    "get",
-    "set"
-  ],
-  "AetherIsland/kirara": [
-    "isEqual",
-    "isEqual",
-    "difference"
-  ],
+  "joris-gallot/compare-tsc-diagnostics": ["camelCase", "startCase"],
+  "caleb531/personal-website": ["keyBy", "keyBy", "groupBy", "keyBy"],
+  "stellarhoof/macro-planning": ["startCase", "startCase", "omitBy", "get", "set"],
+  "AetherIsland/kirara": ["isEqual", "isEqual", "difference"],
   "lebmouse/lenne-app": [],
   "yandex-hakaton-kardo/kardo-mobile-app-front": [],
-  "Uniswap/interface": [
-    "omit",
-    "pick",
-    "pick",
-    "isEqual"
-  ],
+  "Uniswap/interface": ["omit", "pick", "pick", "isEqual"],
   "onlyhappiness/tong-tong-app": [],
   "wfjsw/devblogs": [],
-  "heyllog/nextjs-template": [
-    "delay"
-  ],
-  "nolanlawson/repro-tach-resolve-issue": [
-    "debounce"
-  ],
-  "developaul/optimize-resume": [
-    "groupBy",
-    "keyBy"
-  ],
-  "neptun-software/neptun.web": [
-    "takeRightWhile",
-    "without",
-    "/* dropRight */",
-    "uniqWith"
-  ],
+  "heyllog/nextjs-template": ["delay"],
+  "nolanlawson/repro-tach-resolve-issue": ["debounce"],
+  "developaul/optimize-resume": ["groupBy", "keyBy"],
+  "neptun-software/neptun.web": ["takeRightWhile", "without", "/* dropRight */", "uniqWith"],
   "FancyStudioTeam/Overseer": [],
-  "thejustinwalsh/dice-caster": [
-    "sample",
-    "sampleSize"
-  ],
+  "thejustinwalsh/dice-caster": ["sample", "sampleSize"],
   "jasonkuhrt/graphql-request": [],
-  "okeeffed/postman-tools": [
-    "camelCase"
-  ],
+  "okeeffed/postman-tools": ["camelCase"],
   "fauxparse/nzif": [],
   "arligle/nest-drizzle-authjs": [],
   "List-KR/microShield-token-gen": [],
   "OlegShchavelev/ALTKDEWiki": [],
-  "jonasfroeller/nuxai": [
-    "takeRightWhile",
-    "without",
-    "/* dropRight */",
-    "uniqWith"
-  ],
+  "jonasfroeller/nuxai": ["takeRightWhile", "without", "/* dropRight */", "uniqWith"],
   "MGHYGitHub/docs": [],
   "Innei/electric-demo": [],
   "pavlakissimos/tanstack-form-poc": [],
-  "Genfic/Ogma": [
-    "clamp"
-  ],
-  "wsxok/wendyjs": [
-    "debounce"
-  ],
+  "Genfic/Ogma": ["clamp"],
+  "wsxok/wendyjs": ["debounce"],
   "GlobalFishingWatch/frontend": [
     "debounce",
     "debounce",
@@ -243,47 +149,22 @@
   ],
   "Hierifer/cyberhunter": [],
   "wharfie/wharfie": [],
-  "portone-io/sdk-playground.portone.io": [
-    "isEqual",
-    "omit",
-    "omit",
-    "omit",
-    "compact",
-    "omit"
-  ],
+  "portone-io/sdk-playground.portone.io": ["isEqual", "omit", "omit", "omit", "compact", "omit"],
   "jdanil/skunkworks": [],
   "gregdaynes/scratch": [],
   "gregdaynes/node-event-emitter": [],
   "OlegShchavelev/ALTGnomeWiki": [],
   "Nexters/Bottles_Web": [],
   "pleisto/active-support": [],
-  "valcosmos/react-playground": [
-    "debounce",
-    "debounce"
-  ],
-  "kangactor123/radix-storybook": [
-    "uniq"
-  ],
-  "lbb00/danqing": [
-    "clone"
-  ],
+  "valcosmos/react-playground": ["debounce", "debounce"],
+  "kangactor123/radix-storybook": ["uniq"],
+  "lbb00/danqing": ["clone"],
   "ejfkdev/lark-bitable-sidebar-send-mail": [],
-  "mahdi-sheibak/shadcnui-icon-picker": [
-    "uniqBy",
-    "delay"
-  ],
+  "mahdi-sheibak/shadcnui-icon-picker": ["uniqBy", "delay"],
   "Hierifer/hex-engine": [],
-  "ajotaos/cbx-weekly": [
-    "omit",
-    "takeWhile"
-  ],
-  "vincenteof/vincenteofchen": [
-    "groupBy"
-  ],
-  "AprDeci/clash2singbox": [
-    "union",
-    "concat"
-  ],
+  "ajotaos/cbx-weekly": ["omit", "takeWhile"],
+  "vincenteof/vincenteofchen": ["groupBy"],
+  "AprDeci/clash2singbox": ["union", "concat"],
   "secretstache/wordpress-seed-starter": [],
   "learlab/itell-strapi-demo": [
     "groupBy",
@@ -299,37 +180,18 @@
     "groupBy",
     "isNil"
   ],
-  "StanfordBDHG/ENGAGE-HF-Web-Frontend": [
-    "chunk",
-    "groupBy",
-    "kebabCase"
-  ],
+  "StanfordBDHG/ENGAGE-HF-Web-Frontend": ["chunk", "groupBy", "kebabCase"],
   "Rel1cx/eslint-react": [],
   "ahao-triple/beting": [],
-  "gera2ld/marktiddly": [
-    "once",
-    "once",
-    "debounce"
-  ],
+  "gera2ld/marktiddly": ["once", "once", "debounce"],
   "Sanjeever/bank-card-info-query": [],
   "hyungjunk/figma-plugin": [],
-  "seheon99/vocabulary-workshop-v2": [
-    "isNil"
-  ],
-  "libondev/easy-api": [
-    "set",
-    "unionBy",
-    "cloneDeep"
-  ],
+  "seheon99/vocabulary-workshop-v2": ["isNil"],
+  "libondev/easy-api": ["set", "unionBy", "cloneDeep"],
   "owocc/low-code": [],
   "siisee11/catch-maind": [],
-  "nolebase/integrations": [
-    "omit"
-  ],
-  "JeonJaewon/coffee-scraper": [
-    "debounce",
-    "isUndefined"
-  ],
+  "nolebase/integrations": ["omit"],
+  "JeonJaewon/coffee-scraper": ["debounce", "isUndefined"],
   "strata-czasu/hashira": [
     "capitalize",
     "chunk",
@@ -342,77 +204,31 @@
   ],
   "secretstache/wordpress-starter": [],
   "secretstache/wordpress-gutenberg": [],
-  "cyb1999/ianai-cli": [
-    "isNil",
-    "omitBy"
-  ],
+  "cyb1999/ianai-cli": ["isNil", "omitBy"],
   "Mushus/chatbot": [],
   "mpv-easy/mpv-easy": [],
-  "SkyLissh/tabletop-games": [
-    "differenceWith",
-    "intersectionWith",
-    "isEqual"
-  ],
-  "phatdev-hehe/icon-sets": [
-    "*"
-  ],
-  "CraziiIvan/nexus": [
-    "throttle"
-  ],
-  "gaki2/vegeta": [
-    "throttle",
-    "clamp",
-    "throttle"
-  ],
+  "SkyLissh/tabletop-games": ["differenceWith", "intersectionWith", "isEqual"],
+  "phatdev-hehe/icon-sets": ["*"],
+  "CraziiIvan/nexus": ["throttle"],
+  "gaki2/vegeta": ["throttle", "clamp", "throttle"],
   "stevieyu/movie-demo": [],
-  "ejfkdev/lark-bitable-dashboard-flexible-iframe": [
-    "shuffle"
-  ],
-  "arkntools/unity-js": [
-    "sumBy",
-    "last",
-    "maxBy"
-  ],
+  "ejfkdev/lark-bitable-dashboard-flexible-iframe": ["shuffle"],
+  "arkntools/unity-js": ["sumBy", "last", "maxBy"],
   "rafamel/riseup": [],
-  "johannschopplich/johannschopplich.com": [
-    "debounce"
-  ],
-  "qiushiyan/slide": [
-    "delay"
-  ],
-  "toss/es-toolkit": [
-    "debounce",
-    "chunk",
-    "chunk"
-  ],
+  "johannschopplich/johannschopplich.com": ["debounce"],
+  "qiushiyan/slide": ["delay"],
+  "toss/es-toolkit": ["debounce", "chunk", "chunk"],
   "wbtll/online-shopping-mall": [],
   "bigbigDreamer/coze-swiss-knife": [],
-  "leey00nsu/daily-mission-fe": [
-    "delay",
-    "delay",
-    "delay"
-  ],
+  "leey00nsu/daily-mission-fe": ["delay", "delay", "delay"],
   "fricze/digitz": [],
-  "wo-o29/portfolio": [
-    "throttle",
-    "throttle"
-  ],
-  "robinloeffel/trachtengruppe-ins": [
-    "uniqWith"
-  ],
+  "wo-o29/portfolio": ["throttle", "throttle"],
+  "robinloeffel/trachtengruppe-ins": ["uniqWith"],
   "innei-template/nest-drizzle-authjs": [],
-  "frontend-study-project/FrontendMentor": [
-    "throttle"
-  ],
-  "ejfkdev/lark-bitable-dashboard-stock-market": [
-    "once"
-  ],
-  "MangMax/nuxt-es-toolkit": [
-    "*"
-  ],
-  "outsung/noc": [
-    "clamp"
-  ],
+  "frontend-study-project/FrontendMentor": ["throttle"],
+  "ejfkdev/lark-bitable-dashboard-stock-market": ["once"],
+  "MangMax/nuxt-es-toolkit": ["*"],
+  "outsung/noc": ["clamp"],
   "hwangjinseong/toss-es-toolkit-start": [
     "differenceWith",
     "differenceBy",
@@ -422,38 +238,15 @@
     "chunk",
     "$slice"
   ],
-  "CraziiIvan/elevateV2": [
-    "throttle"
-  ],
-  "XionWCFM/react-query-extend-example": [
-    "groupBy"
-  ],
-  "bruni-arendelle/blueprint": [
-    "omit",
-    "pick"
-  ],
-  "TEAM-FLOWBIT/flowbit": [
-    "randomInt"
-  ],
+  "CraziiIvan/elevateV2": ["throttle"],
+  "XionWCFM/react-query-extend-example": ["groupBy"],
+  "bruni-arendelle/blueprint": ["omit", "pick"],
+  "TEAM-FLOWBIT/flowbit": ["randomInt"],
   "JellyBrick/modern-web-swiss-army-knife": [],
-  "forif-npo/forif-official": [
-    "debounce",
-    "debounce"
-  ],
-  "kshehadeh/confluence-librarian": [
-    "differenceBy"
-  ],
+  "forif-npo/forif-official": ["debounce", "debounce"],
+  "kshehadeh/confluence-librarian": ["differenceBy"],
   "heroleggo/financial-data-server": [],
-  "scomans/dev-console": [
-    "isNil",
-    "isNil",
-    "isNil",
-    "isNil",
-    "isNil",
-    "isNil",
-    "isNil",
-    "isNil"
-  ],
+  "scomans/dev-console": ["isNil", "isNil", "isNil", "isNil", "isNil", "isNil", "isNil", "isNil"],
   "eeuneeun/trpgBoEunWorld": [],
   "ho991217/typescript-playground": []
 }
