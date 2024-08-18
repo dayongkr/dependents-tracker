@@ -8,6 +8,6 @@
     "esModuleInterop": true,
     "moduleResolution": "Bundler"
   },
-  "include": ["packages/**/*.ts", "packages/**/*.tsx"],
+  "include": ["packages/**/*.ts", "packages/**/*.tsx", "packages/**/*.mts"],
   "exclude": ["node_modules, dist"]
 }
