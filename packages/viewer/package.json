@@ -1,5 +1,5 @@
 {
-  "name": "dependents-viewer",
+  "name": "@dependents-tracker/viewer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
