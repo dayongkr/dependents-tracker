@@ -1,6 +1,6 @@
 dist
 node_moudles
 .next
-.eslintrc.cjs
 .eslintrc.js
 *.config.js
+*.config.mjs
