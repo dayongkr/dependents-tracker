@@ -3,6 +3,7 @@ module.exports = {
   env: {
     es6: true,
     node: true,
+    browser: true,
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -13,5 +14,10 @@ module.exports = {
     },
   },
   plugins: ['@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'next/core-web-vitals',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+  ],
 };
