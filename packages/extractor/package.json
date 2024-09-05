@@ -1,11 +1,11 @@
 {
-  "name": "@dependents-tracker/scrapper",
+  "name": "@dependents-tracker/extractor",
   "version": "0.1.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "watch": "rollup -c -w"
+    "dev": "rollup -c -w"
   },
   "keywords": [],
   "author": "",
