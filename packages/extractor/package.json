@@ -1,11 +1,12 @@
 {
   "name": "@dependents-tracker/extractor",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,9 @@
     "rollup": "^4.20.0",
     "tslib": "^2.6.3"
   },
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=18"
   }
