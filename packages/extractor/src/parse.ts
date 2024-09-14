@@ -1,6 +1,12 @@
-export function getImportDeclarations(line: string, packageName: string): ReturnType<typeof String.prototype.match> {
+export function getImportDeclarations(source: string, packageName: string): string[] {
   const regex = new RegExp(`import[^'"]*['"]${packageName}`, 'gs');
-  return line.match(regex);
+  const matches = source.match(regex);
+
+  if (matches === null) {
+    return [];
+  }
+
+  return matches;
 }
 
 export function getImportSpecifiers(importDeclaration: string): string[] {
