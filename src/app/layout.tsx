@@ -20,19 +20,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(pretendard.className)}>
-        <div className="flex h-dvh w-screen bg-muted">
-          <aside className="w-14 border-r bg-background">
-            <nav className="flex flex-col items-center gap-4 py-4">
-              <Link
-                href="/"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary transition-all hover:scale-110 hover:text-foreground"
-              >
-                <Binoculars className="h-4 w-4 bg-primary text-primary-foreground" />
-              </Link>
-            </nav>
-          </aside>
-          <main className="w-full p-6">{children}</main>
-        </div>
+        <aside className="w-full border-r bg-background">
+          <nav className="flex items-center gap-2 p-4">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary transition-all hover:scale-110 hover:text-foreground">
+                <Binoculars className="h-3 w-3 bg-primary text-primary-foreground" />
+              </span>
+              <h1>Dependents Tracker</h1>
+            </Link>
+          </nav>
+        </aside>
+        <main className="w-full overflow-y-auto p-6">{children}</main>
       </body>
     </html>
   );

@@ -1,35 +1,38 @@
-'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from '@/components/shadcn/chart';
+import { DataTable } from '@/components/shadcn/data-table';
+import { getDependents } from '@/libs/model/getDependents';
 import { BarChart, Bar, CartesianGrid, XAxis, PieChart, Pie, LabelList } from 'recharts';
-import dependentsData from '@/../public/es-toolkit.json';
+import { Columns } from './_internal/Columns';
 
 export default function Home() {
-  const chartData: { name: string; value: number }[] = Object.entries(dependentsData)
-    .map(([key, value]) => ({
-      name: key,
-      value: value.length,
-    }))
-    .filter(({ value }) => value > 0)
-    .sort((a, b) => b.value - a.value);
-  const top5Dependents = chartData
-    .slice(0, 5)
-    .map(({ name, value }) => ({ name, value, fill: `var(--color-${name.split('/')[1]})` }));
+  // const chartData: { name: string; value: number }[] = Object.entries(dependentsData)
+  //   .map(([key, value]) => ({
+  //     name: key,
+  //     value: value.length,
+  //   }))
+  //   .filter(({ value }) => value > 0)
+  //   .sort((a, b) => b.value - a.value);
+  // const top5Dependents = chartData
+  //   .slice(0, 5)
+  //   .map(({ name, value }) => ({ name, value, fill: `var(--color-${name.split('/')[1]})` }));
 
-  const charConfig: ChartConfig = {
-    name: { label: 'Dependents', color: 'hsl(var(--chart-1))' },
-  };
-  const pieCharConfig: ChartConfig = top5Dependents.reduce(
-    (acc, { name }, index) => ({
-      ...acc,
-      [name.split('/')[1]]: { label: name, color: `hsl(var(--chart-${index + 1}))` },
-    }),
-    {}
-  );
+  // const charConfig: ChartConfig = {
+  //   name: { label: 'Dependents', color: 'hsl(var(--chart-1))' },
+  // };
+  // const pieCharConfig: ChartConfig = top5Dependents.reduce(
+  //   (acc, { name }, index) => ({
+  //     ...acc,
+  //     [name.split('/')[1]]: { label: name, color: `hsl(var(--chart-${index + 1}))` },
+  //   }),
+  //   {}
+  // );
+  const data = getDependents();
 
   return (
-    <div className="grid w-full grid-cols-2 justify-center gap-6">
-      <Card>
+    <div>
+      <DataTable columns={Columns} data={data} />
+      {/* <Card>
         <CardHeader>
           <CardTitle>Total count of imports</CardTitle>
           <CardDescription>
@@ -69,7 +72,7 @@ export default function Home() {
             </PieChart>
           </ChartContainer>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }
