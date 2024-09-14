@@ -1,10 +1,3 @@
-function minify(html: string): string {
-  return html
-    .split('\n')
-    .map((line) => line.trim())
-    .join('');
-}
-
 export function getNextPageUrl(html: string, user: string, repository: string): string | null {
   const urlPattern = `https://github.com/${user}/${repository}/network/dependents\\?dependents_after=[\\w\\d]+`;
   const lookbehindPattern = `(?<=href=")`;
@@ -46,12 +39,14 @@ export async function getDependents(repositoryOwner: string, repositoryName: str
       throw new Error('Failed to fetch dependents page');
     }
 
-    const dependentsPageText = minify(await dependentsPageRes.text());
+    const dependentsPageText = await dependentsPageRes.text();
     const repositories = getRepositories(dependentsPageText);
+
+    console.log(`Got ${repositories.length} dependents from ${dependentsUrl}`);
 
     dependents.push(...repositories);
     dependentsUrl = getNextPageUrl(dependentsPageText, repositoryOwner, repositoryName);
   }
-
+  console.log(`Got ${dependents.length} dependents in total`);
   return dependents;
 }
