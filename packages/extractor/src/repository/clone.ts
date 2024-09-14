@@ -3,6 +3,43 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 
+export function cloneRepository(fullname: string): {
+  repositoryDirname: string;
+  hit: boolean;
+} {
+  const tempDirname = path.resolve(import.meta.dirname, './.temp');
+  const repositoryName = fullname.split('/')[1];
+  const repositoryDirname = path.resolve(import.meta.dirname, `./.temp/${repositoryName}`);
+
+  if (!fs.existsSync(tempDirname)) {
+    fs.mkdirSync(tempDirname);
+  }
+
+  if (fs.existsSync(repositoryDirname)) {
+    fs.rmSync(repositoryDirname, { recursive: true });
+  }
+
+  // At first, we clone the repository only with the .git directory and a recent commit.
+  execSync(`git clone https://github.com/${fullname}.git --depth=1 --no-checkout --filter=blob:none`, {
+    stdio: 'ignore', // ignore stdout and stderr
+    cwd: tempDirname,
+  });
+
+  console.log(`Cloned ${fullname} to ${repositoryDirname}`);
+
+  // const headHash = execSync('git rev-parse HEAD', {
+  //   cwd: repositoryDirname,
+  //   encoding: 'utf-8',
+  // }).trim();
+
+  // await execSync(`git checkout`, {
+  //   stdio: 'ignore',
+  //   cwd: repositoryDirname,
+  // });
+
+  return { repositoryDirname, hit: false };
+}
+
 export async function getImportLines(
   dependent: string,
   packageName: string,
