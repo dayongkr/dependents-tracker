@@ -1,40 +1,40 @@
-import { type Dirent, readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-function resolveEntryName(entry: Dirent, repositoryDirname: string) {
-  entry.name = resolve(repositoryDirname, entry.name); // resolve to absolute path
-  return entry;
-}
-
-export function browseRepository(repositoryDirname: string, sourceHandler: (source: string) => unknown) {
-  const stack = readdirSync(repositoryDirname, { withFileTypes: true }).map((entry) =>
-    resolveEntryName(entry, repositoryDirname)
-  );
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function browseRepository<F extends (source: string) => any>(
+  repositoryDirname: string,
+  sourceHandler: F
+): { filename: string; result: ReturnType<F> }[] {
+  const stack = readdirSync(repositoryDirname, { withFileTypes: true });
   const excludes = ['node_modules', '.git'];
   const results = [];
 
   while (stack.length > 0) {
     const entry = stack.pop();
+
     if (entry == null || excludes.some((exclude) => entry.name.includes(exclude))) {
       continue;
     }
 
-    if (entry.isDirectory()) {
-      const subEntries = readdirSync(entry.name, { withFileTypes: true }).map((subEntry) =>
-        resolveEntryName(subEntry, entry.name)
-      );
-      stack.push(...subEntries);
-    } else {
-      const source = readFileSync(entry.name, 'utf-8');
-      const result = sourceHandler(source);
-
-      if (Array.isArray(result)) {
-        results.push(...result);
+    try {
+      if (entry.isDirectory()) {
+        const subEntries = readdirSync(resolve(entry.parentPath, entry.name), { withFileTypes: true });
+        stack.push(...subEntries);
       } else {
-        results.push(result);
+        const source = readFileSync(resolve(entry.parentPath, entry.name), 'utf-8');
+        const result = sourceHandler(source);
+
+        if (result.length) {
+          results.push({ filename: resolve(entry.parentPath.replace(repositoryDirname, ''), entry.name), result });
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`Skipping ${entry.name} due to error: ${error.message}`);
       }
     }
   }
-  console.log('Browsed', repositoryDirname);
+
   return results;
 }
