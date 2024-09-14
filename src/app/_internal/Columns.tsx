@@ -1,8 +1,6 @@
 'use client';
 
-import { Button } from '@/components/shadcn/button';
 import type { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
 
 export type Dependents = {
   specifier: string;
