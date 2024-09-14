@@ -25,17 +25,17 @@ export function cloneRepository(fullname: string): {
     cwd: tempDirname,
   });
 
-  console.log(`Cloned ${fullname} to ${repositoryDirname}`);
-
   // const headHash = execSync('git rev-parse HEAD', {
   //   cwd: repositoryDirname,
   //   encoding: 'utf-8',
   // }).trim();
 
-  // await execSync(`git checkout`, {
-  //   stdio: 'ignore',
-  //   cwd: repositoryDirname,
-  // });
+  execSync(`git checkout`, {
+    stdio: 'ignore',
+    cwd: repositoryDirname,
+  });
+
+  console.log(`Cloned ${fullname} to ${repositoryDirname}`);
 
   return { repositoryDirname, hit: false };
 }
