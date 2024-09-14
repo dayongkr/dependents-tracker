@@ -85,7 +85,7 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@20.16.4)(terser@5.31.6)
 
-  packages/scrapper:
+  packages/extractor:
     devDependencies:
       '@rollup/plugin-terser':
         specifier: ^0.4.4
