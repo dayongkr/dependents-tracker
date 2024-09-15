@@ -2,12 +2,24 @@ import { DataTable } from '@/components/shadcn/data-table';
 import { getDependents } from '@/libs/model/getDependents';
 import { Columns } from './_internal/Columns';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
+import Image from 'next/image';
 
 export default function Home() {
   const data = getDependents();
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex items-center gap-3">
+        <Image
+          src="https://avatars.githubusercontent.com/toss"
+          alt="toss"
+          className="rounded-full"
+          width={50}
+          height={50}
+        />
+        <h1 className="text-3xl font-semibold">toss/es-toolkit</h1>
+      </div>
+      <h2 className="text-xl font-semibold">Overview</h2>
       <div className="overflow-x-auto">
         <div className="grid w-fit grid-flow-col gap-3 overflow-x-auto text-nowrap">
           <Card>
@@ -35,6 +47,7 @@ export default function Home() {
           </Card>
         </div>
       </div>
+      <h2 className="text-xl font-semibold">All dependents</h2>
       <DataTable columns={Columns} data={data} />
     </div>
   );
