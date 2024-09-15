@@ -30,7 +30,7 @@ export default function RootLayout({
             </Link>
           </nav>
         </aside>
-        <main className="w-full overflow-y-auto p-6">{children}</main>
+        <main className="container overflow-y-auto p-6">{children}</main>
       </body>
     </html>
   );
