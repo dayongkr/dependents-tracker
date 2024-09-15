@@ -30,7 +30,16 @@ export default function RootLayout({
             </Link>
           </nav>
         </aside>
-        <main className="container overflow-y-auto p-6">{children}</main>
+        <main className="containeroverflow-y-auto p-6">{children}</main>
+        <footer>
+          <p className="p-6 text-center text-sm text-gray-500">
+            If you have any questions or suggestions, please contact me at{' '}
+            <a className="underline" href="mailto:dayongkr@gmail.com">
+              dayongkr@gmail.com
+            </a>
+            .
+          </p>
+        </footer>
       </body>
     </html>
   );
