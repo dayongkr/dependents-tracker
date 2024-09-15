@@ -59,3 +59,9 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+@layer base {
+  body {
+    overscroll-behavior-y: none;
+  }
+}

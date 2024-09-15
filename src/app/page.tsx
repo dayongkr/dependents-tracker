@@ -9,15 +9,15 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Image
           src="https://avatars.githubusercontent.com/toss"
           alt="toss"
           className="rounded-full"
-          width={50}
-          height={50}
+          width={40}
+          height={40}
         />
-        <h1 className="text-3xl font-semibold">toss/es-toolkit</h1>
+        <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
       </div>
       <h2 className="text-xl font-semibold">Overview</h2>
       <div className="overflow-x-auto">
