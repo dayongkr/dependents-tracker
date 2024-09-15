@@ -1,3 +1,5 @@
+import unpluginIcons from 'unplugin-icons/webpack';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -9,6 +11,18 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  webpack(config) {
+    config.infrastructureLogging = {
+      level: 'error',
+    };
+    config.plugins.push(
+      unpluginIcons({
+        compiler: 'jsx',
+        jsx: 'react',
+      })
+    );
+    return config;
   },
 };
 export default nextConfig;
