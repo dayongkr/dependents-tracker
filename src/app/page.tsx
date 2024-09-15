@@ -3,13 +3,14 @@ import { getDependents } from '@/libs/model/getDependents';
 import { Columns } from './_internal/Columns';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   const data = getDependents();
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-2">
+      <Link href="https://github.com/toss/es-toolkit" target="_blank" className="flex items-center gap-2">
         <Image
           src="https://avatars.githubusercontent.com/toss"
           alt="toss"
@@ -18,7 +19,7 @@ export default function Home() {
           height={40}
         />
         <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
-      </div>
+      </Link>
       <h2 className="text-xl font-semibold">Overview</h2>
       <div className="overflow-x-auto">
         <div className="grid w-fit grid-flow-col gap-3 overflow-x-auto text-nowrap">

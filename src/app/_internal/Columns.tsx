@@ -36,7 +36,6 @@ export const Columns: ColumnDef<Dependents>[] = [
           priority
           quality={10}
         />
-
         {cell.row.original.repository}
       </a>
     ),
@@ -47,7 +46,7 @@ export const Columns: ColumnDef<Dependents>[] = [
     cell: ({ cell }) => {
       const link = `https://github.com/${cell.row.original.repository}/blob/${cell.row.original.hash}${cell.row.original.filename}`;
       return (
-        <a href={link} target="blank" className="flex items-center gap-1 hover:underline" rel="noreferrer">
+        <a href={link} target="blank" className="flex items-center gap-1 hover:underline" rel="noopener">
           <FileIcon filename={cell.row.original.filename} />
           {cell.row.original.filename}
         </a>
