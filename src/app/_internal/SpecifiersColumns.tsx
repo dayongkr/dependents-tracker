@@ -1,18 +1,11 @@
 'use client';
 
 import { FileIcon } from '@/components/FileIcon';
+import { Specifier } from '@/libs/model/getSpecifiers';
 import type { ColumnDef } from '@tanstack/react-table';
 import Image from 'next/image';
 
-export type Dependents = {
-  specifier: string;
-  repository: string;
-  filename: string;
-  branch: string;
-  hash: string;
-};
-
-export const Columns: ColumnDef<Dependents>[] = [
+export const SpecifiersColumns: ColumnDef<Specifier>[] = [
   {
     accessorKey: 'specifier',
     header: 'Specifier',
