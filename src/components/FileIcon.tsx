@@ -6,6 +6,7 @@ import LogosMarkdown from '~icons/logos/markdown';
 import { FileQuestion } from 'lucide-react';
 
 const IconMap = new Map<string, (props: React.SVGProps<SVGSVGElement>) => React.ReactElement>();
+
 ['ts', 'tsx', 'mts', 'cts'].forEach((ext) => IconMap.set(ext, LogosTypescriptIcon));
 ['js', 'jsx', 'mjs', 'cjs'].forEach((ext) => IconMap.set(ext, LogosJavascript));
 ['vue'].forEach((ext) => IconMap.set(ext, LogosVue));
@@ -13,11 +14,8 @@ const IconMap = new Map<string, (props: React.SVGProps<SVGSVGElement>) => React.
 ['md', 'markdown', 'mdx'].forEach((ext) => IconMap.set(ext, LogosMarkdown));
 
 export function FileIcon({ filename }: { filename: string }) {
-  const ext = filename.split('.').pop()?.toLowerCase();
+  const ext = filename.toLowerCase().split('.').pop() ?? '';
+  const Icon = IconMap.get(ext) ?? FileQuestion;
 
-  if (!ext || !IconMap.has(ext)) {
-    return <FileQuestion width={20} height={20} />;
-  }
-
-  return IconMap.get(ext)!({ width: 20, height: 20 });
+  return <Icon width={20} height={20} />;
 }
