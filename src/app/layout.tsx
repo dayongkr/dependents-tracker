@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(pretendard.className)}>
         <GNB />
-        <main className="container max-w-7xl overflow-y-auto p-6">{children}</main>
+        {children}
         <Footer />
       </body>
     </html>

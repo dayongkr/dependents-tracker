@@ -25,14 +25,14 @@ export default function Home() {
   const sortedSpecifiers = Array.from(countBySpecifiers.entries()).sort((a, b) => b[1] - a[1]);
 
   return (
-    <>
-      <Link href="https://github.com/toss/es-toolkit" target="_blank" className="flex items-center gap-2">
+    <main className="container max-w-7xl overflow-y-auto p-6">
+      <Link href="https://github.com/toss/es-toolkit" target="_blank" className="flex items-center gap-1">
         <Image
           src="https://avatars.githubusercontent.com/toss"
           alt="toss"
           className="rounded-full"
-          width={40}
-          height={40}
+          width={35}
+          height={35}
         />
         <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
       </Link>
@@ -69,6 +69,6 @@ export default function Home() {
       <Section title="All Specifiers">
         <DataTable columns={SpecifiersColumns} data={specifiers} />
       </Section>
-    </>
+    </main>
   );
 }
