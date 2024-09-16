@@ -1,15 +1,31 @@
 import { DataTable } from '@/components/shadcn/data-table';
-import { getDependents } from '@/libs/model/getDependents';
-import { Columns } from './_internal/Columns';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
+import { getSpecifiers } from '@/libs/model/getSpecifiers';
+import { SpecifiersColumns } from './_internal/SpecifiersColumns';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Section } from '@/components/Section';
+import { OverviewCard } from './_internal/OverviewCard';
 
 export default function Home() {
-  const data = getDependents();
+  const specifiers = getSpecifiers();
+
+  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
+  const countByRepositories = new Map<string, number>();
+  const countBySpecifiers = new Map<string, number>();
+
+  for (const specifier of specifiers) {
+    const countByRepository = countByRepositories.get(specifier.repository) ?? 0;
+    const countBySpecifier = countBySpecifiers.get(specifier.specifier) ?? 0;
+
+    countByRepositories.set(specifier.repository, countByRepository + 1);
+    countBySpecifiers.set(specifier.specifier, countBySpecifier + 1);
+  }
+
+  const sortedRepositories = Array.from(countByRepositories.entries()).sort((a, b) => b[1] - a[1]);
+  const sortedSpecifiers = Array.from(countBySpecifiers.entries()).sort((a, b) => b[1] - a[1]);
 
   return (
-    <div className="flex flex-col gap-6">
+    <>
       <Link href="https://github.com/toss/es-toolkit" target="_blank" className="flex items-center gap-2">
         <Image
           src="https://avatars.githubusercontent.com/toss"
@@ -20,36 +36,39 @@ export default function Home() {
         />
         <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
       </Link>
-      <h2 className="text-xl font-semibold">Overview</h2>
-      <div className="overflow-x-auto">
-        <div className="grid w-fit grid-flow-col gap-3 overflow-x-auto text-nowrap">
-          <Card>
-            <CardHeader className="pb-2">Total Import specifiers</CardHeader>
-            <CardContent>
-              <CardTitle className="mb-2 text-primary">{data.length.toLocaleString()}</CardTitle>
-              <CardDescription>Collected only imported in ESM format.</CardDescription>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">Total Repositories</CardHeader>
-            <CardContent>
-              <CardTitle className="mb-2 text-primary">
-                {new Set(data.map((d) => d.repository)).size.toLocaleString()}
-              </CardTitle>
-              <CardDescription>Counted actually called and using it.</CardDescription>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2">Top 1 User</CardHeader>
-            <CardContent>
-              <CardTitle className="mb-2 text-primary">Unknown</CardTitle>
-              <CardDescription>Not yet implemented.</CardDescription>
-            </CardContent>
-          </Card>
+      <Section title="Overview">
+        <div className="overflow-x-auto">
+          <div className="grid w-fit grid-flow-col gap-3 text-nowrap">
+            <OverviewCard
+              title="Total Import specifiers"
+              primary={specifiers.length}
+              description="Collected only imported in ESM format."
+            />
+            <OverviewCard
+              title="Total Repositories"
+              primary={uniqueRepositories.size}
+              description="Not just installed, but also imported."
+            />
+            <OverviewCard
+              title="Most Imported Repository"
+              primary={
+                <Link href={`https://github.com/${sortedRepositories[0][0]}`} className="hover:underline">
+                  {sortedRepositories[0][0]}
+                </Link>
+              }
+              description={`Imported ${sortedRepositories[0][1]} times.`}
+            />
+            <OverviewCard
+              title="Most Imported Specifier"
+              primary={sortedSpecifiers[0][0]}
+              description={`Imported ${sortedSpecifiers[0][1]} times.`}
+            />
+          </div>
         </div>
-      </div>
-      <h2 className="text-xl font-semibold">All dependents</h2>
-      <DataTable columns={Columns} data={data} />
-    </div>
+      </Section>
+      <Section title="All Specifiers">
+        <DataTable columns={SpecifiersColumns} data={specifiers} />
+      </Section>
+    </>
   );
 }
