@@ -56,12 +56,12 @@ export default function Home() {
             <OverviewCard
               title="Total Import specifiers"
               primary={specifiers.length}
-              description="Collected only imported in ESM format."
+              description="Only ESM format imports."
             />
             <OverviewCard
               title="Total Repositories"
               primary={uniqueRepositories.size}
-              description="Not just installed, but also imported."
+              description="Only used repositories were counted, not just installed."
             />
             <OverviewCard
               title="Most Imported Repository"
@@ -83,7 +83,7 @@ export default function Home() {
           <BarChart
             data={sortedSpecifiers.slice(0, 10)}
             title="Top 10 Specifiers"
-            description="Counted only imported in ESM format."
+            description="Only ESM format imports."
             xDataKey="0"
             yDataKey="1"
           />
@@ -91,7 +91,7 @@ export default function Home() {
             <PieChart
               data={sortedExtensions.slice(0, 5)}
               title="Top 5 Extensions"
-              description="Counted only imported in ESM format."
+              description="that are most frequently imported."
               nameKey="0"
               dataKey="1"
               donut={{ title: sortedExtensions[0][0], description: 'Top 1 Extension' }}
@@ -99,7 +99,7 @@ export default function Home() {
             <PieChart
               data={sortedUsers.slice(0, 5)}
               title="Top 5 Users"
-              description="Counted only imported in ESM format."
+              description="who are most frequently imported."
               nameKey="0"
               dataKey="1"
             />
