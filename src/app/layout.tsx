@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { cn } from '@/libs/utils';
 import Footer from './_internal/layout/Footer';
@@ -25,6 +26,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+      <GoogleAnalytics gaId="GTM-TM73NFV7" />
     </html>
   );
 }
