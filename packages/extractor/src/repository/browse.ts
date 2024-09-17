@@ -27,7 +27,9 @@ export function browseRepository<F extends (source: string) => any>(
         const result = sourceHandler(source);
 
         if (result.length) {
-          results.push({ filename: resolve(entry.parentPath.replace(repositoryDirname, ''), entry.name), result });
+          const path = entry.parentPath.replace(repositoryDirname, '');
+
+          results.push({ filename: path === '' ? entry.name : resolve(path, entry.name), result });
         }
       }
     } catch (error) {
