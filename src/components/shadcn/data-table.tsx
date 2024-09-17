@@ -1,25 +1,54 @@
 'use client';
 
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  type ColumnDef,
+  type ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
 import { Button } from '@/components/shadcn/button';
+import { Input } from '@/components/shadcn/input';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  filter,
+}: DataTableProps<TData, TValue> & { filter?: string }) {
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+    },
   });
 
   return (
-    <>
+    <div className="flex flex-col gap-3">
+      {filter && (
+        <Input
+          placeholder={`Filter ${filter}...`}
+          value={(table.getColumn(filter)?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn(filter)?.setFilterValue(event.target.value)}
+          className="max-w-xs"
+        />
+      )}
       <div className="text-nowrap rounded-md border">
         <Table>
           <TableHeader>
@@ -54,7 +83,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end gap-6 p-4">
+      <div className="flex items-center justify-end gap-6">
         <p className="text-sm">
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </p>
@@ -88,6 +117,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

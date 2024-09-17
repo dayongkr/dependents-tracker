@@ -107,7 +107,7 @@ export default function Home() {
         </div>
       </Section>
       <Section title="Specifiers table">
-        <DataTable columns={SpecifiersColumns} data={specifiers} />
+        <DataTable columns={SpecifiersColumns} data={specifiers} filter="specifier" />
       </Section>
     </main>
   );
