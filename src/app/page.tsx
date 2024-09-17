@@ -16,6 +16,9 @@ export default function Home() {
   const countByExtensions = new Map<string, number>();
   const countByUsers = new Map<string, number>();
 
+  const uniqueFilename = new Set<string>();
+  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
+
   for (const specifier of specifiers) {
     const extension = specifier.filename.toLowerCase().split('.').pop() ?? '';
     const user = specifier.repository.split('/')[0];
@@ -27,16 +30,18 @@ export default function Home() {
 
     countByRepositories.set(specifier.repository, countByRepository + 1);
     countBySpecifiers.set(specifier.specifier, countBySpecifier + 1);
-    countByExtensions.set(extension, countByExtension + 1);
     countByUsers.set(user, countByUser + 1);
+
+    if (!uniqueFilename.has(specifier.filename)) {
+      countByExtensions.set(extension, countByExtension + 1);
+      uniqueFilename.add(specifier.filename);
+    }
   }
 
   const sortedRepositories = Array.from(countByRepositories.entries()).sort((a, b) => b[1] - a[1]);
   const sortedSpecifiers = Array.from(countBySpecifiers.entries()).sort((a, b) => b[1] - a[1]);
   const sortedExtensions = Array.from(countByExtensions.entries()).sort((a, b) => b[1] - a[1]);
   const sortedUsers = Array.from(countByUsers.entries()).sort((a, b) => b[1] - a[1]);
-
-  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
 
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
@@ -91,7 +96,7 @@ export default function Home() {
             <PieChart
               data={sortedExtensions.slice(0, 5)}
               title="Top 5 Extensions"
-              description="that are most frequently imported."
+              description="that imported the most frequently."
               nameKey="0"
               dataKey="1"
               donut={{ title: sortedExtensions[0][0], description: 'Top 1 Extension' }}
@@ -99,7 +104,7 @@ export default function Home() {
             <PieChart
               data={sortedUsers.slice(0, 5)}
               title="Top 5 Users"
-              description="who are most frequently imported."
+              description="who imported the most frequently."
               nameKey="0"
               dataKey="1"
             />
