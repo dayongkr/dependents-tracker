@@ -58,6 +58,8 @@ describe('getImportSpecifiers', () => {
       'export2',
     ]);
     expect(getImportSpecifiers('import defaultExport, { export1, /* … */ } from "module-name";')).toEqual(['export1']);
+    expect(getImportSpecifiers('import { cloneDeep as _cloneDeep, } from "module";')).toEqual(['cloneDeep']);
+    expect(getImportSpecifiers('import {clone,cloneDeep,} from "module";')).toEqual(['clone', 'cloneDeep']);
   });
 
   it('should return empty array for invalid import lines', () => {

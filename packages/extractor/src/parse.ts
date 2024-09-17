@@ -18,8 +18,8 @@ export function getImportSpecifiers(importDeclaration: string): string[] {
   }
 
   const unwrapped = matches[0].slice(1, -1);
-  const specifiers = unwrapped.split(',').map((specifier) => specifier.trim().split(' ')[0]);
-  const filtered = specifiers.filter((specifier) => !specifier.includes('/'));
+  const specifiers = unwrapped.split(',').map((specifier) => specifier.trim().split(' as ')[0]);
+  const filtered = specifiers.filter((specifier) => !specifier.includes('/') && specifier);
 
   return filtered;
 }

@@ -4,16 +4,17 @@ import { resolve } from 'node:path';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function browseRepository<F extends (source: string) => any>(
   repositoryDirname: string,
+  excludes: string[] = [],
   sourceHandler: F
 ): { filename: string; result: ReturnType<F> }[] {
   const stack = readdirSync(repositoryDirname, { withFileTypes: true });
-  const excludes = ['node_modules', '.git'];
+  const defaultExcludes = [...excludes, 'node_modules', '.git'];
   const results = [];
 
   while (stack.length > 0) {
     const entry = stack.pop();
 
-    if (entry == null || excludes.some((exclude) => entry.name.includes(exclude))) {
+    if (entry == null || defaultExcludes.some((exclude) => entry.name.includes(exclude))) {
       continue;
     }
 
