@@ -8,8 +8,9 @@ import { GNB } from './_internal/layout/GNB';
 const pretendard = localFont({ src: '../fonts/PretendardVariable.subset.woff2', display: 'swap', weight: '45 920' });
 
 export const metadata: Metadata = {
-  title: 'Dependents Tracker - Viewer',
+  title: 'Dependents Tracker',
   description: 'Dependents Tracker shows the dependents of a repository that you want to track.',
+  metadataBase: new URL('https://dependents-tracker.vercel.app'),
 };
 
 export default function RootLayout({
