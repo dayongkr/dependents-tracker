@@ -8,7 +8,7 @@ export function OverviewCard({
   const formattedPrimary = typeof primary === 'number' ? primary.toLocaleString() : primary;
 
   return (
-    <Card className="w-fit">
+    <Card className="w-full min-w-fit">
       <CardHeader className="pb-2">{title}</CardHeader>
       <CardContent>
         <CardTitle className="mb-2 text-primary">{formattedPrimary}</CardTitle>

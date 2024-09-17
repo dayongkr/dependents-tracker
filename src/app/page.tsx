@@ -5,24 +5,38 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Section } from '@/components/Section';
 import { OverviewCard } from './_internal/OverviewCard';
+import { BarChart } from '../components/BarChart';
+import { DonutChart } from '../components/DonutChart';
 
 export default function Home() {
   const specifiers = getSpecifiers();
 
-  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
   const countByRepositories = new Map<string, number>();
   const countBySpecifiers = new Map<string, number>();
+  const countByExtensions = new Map<string, number>();
+  const countByUsers = new Map<string, number>();
 
   for (const specifier of specifiers) {
+    const extension = specifier.filename.toLowerCase().split('.').pop() ?? '';
+    const user = specifier.repository.split('/')[0];
+
     const countByRepository = countByRepositories.get(specifier.repository) ?? 0;
     const countBySpecifier = countBySpecifiers.get(specifier.specifier) ?? 0;
+    const countByExtension = countByExtensions.get(extension) ?? 0;
+    const countByUser = countByUsers.get(user) ?? 0;
 
     countByRepositories.set(specifier.repository, countByRepository + 1);
     countBySpecifiers.set(specifier.specifier, countBySpecifier + 1);
+    countByExtensions.set(extension, countByExtension + 1);
+    countByUsers.set(user, countByUser + 1);
   }
 
   const sortedRepositories = Array.from(countByRepositories.entries()).sort((a, b) => b[1] - a[1]);
   const sortedSpecifiers = Array.from(countBySpecifiers.entries()).sort((a, b) => b[1] - a[1]);
+  const sortedExtensions = Array.from(countByExtensions.entries()).sort((a, b) => b[1] - a[1]);
+  const sortedUsers = Array.from(countByUsers.entries()).sort((a, b) => b[1] - a[1]);
+
+  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
 
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
@@ -38,7 +52,7 @@ export default function Home() {
       </Link>
       <Section title="Overview">
         <div className="overflow-x-auto">
-          <div className="grid w-fit grid-flow-col gap-3 text-nowrap">
+          <div className="flex gap-3 text-nowrap">
             <OverviewCard
               title="Total Import specifiers"
               primary={specifiers.length}
@@ -62,6 +76,35 @@ export default function Home() {
               title="Most Imported Specifier"
               primary={sortedSpecifiers[0][0]}
               description={`Imported ${sortedSpecifiers[0][1]} times.`}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
+          <BarChart
+            data={sortedSpecifiers.slice(0, 10)}
+            title="Top 10 Specifiers"
+            description="Counted only imported in ESM format."
+            xDataKey="0"
+            yDataKey="1"
+          />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-2">
+            <DonutChart
+              data={sortedExtensions.slice(0, 5)}
+              title="Top 5 Extensions"
+              description="Counted only imported in ESM format."
+              subTitle={sortedExtensions[0][0]}
+              subDescription="that most used"
+              nameKey="0"
+              dataKey="1"
+            />
+            <DonutChart
+              data={sortedUsers.slice(0, 5)}
+              title="Top 5 Users"
+              description="Counted only imported in ESM format."
+              subTitle={sortedUsers[0][0]}
+              subDescription="that most used"
+              nameKey="0"
+              dataKey="1"
             />
           </div>
         </div>
