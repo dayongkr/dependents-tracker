@@ -18,7 +18,7 @@ export function BarChart<T>({
   description: string;
   xDataKey: string & keyof T;
   yDataKey: string & keyof T;
-  label?: string;
+  label: string;
 }>) {
   const chartConfig = {
     [yDataKey]: {
@@ -44,7 +44,7 @@ export function BarChart<T>({
           >
             <CartesianGrid vertical={false} />
             <XAxis dataKey={xDataKey} tickLine={false} tickMargin={10} axisLine={false} />
-            {label && <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />}
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideIndicator />} />
             <Bar dataKey={yDataKey} fill={`var(--color-${yDataKey})`} radius={8}>
               <LabelList position="top" offset={12} className="fill-foreground" fontSize={12} />
             </Bar>

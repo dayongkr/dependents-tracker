@@ -91,6 +91,7 @@ export default function Home() {
             description="Only ESM format imports."
             xDataKey="0"
             yDataKey="1"
+            label="imports"
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-2">
             <PieChart
