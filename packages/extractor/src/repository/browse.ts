@@ -29,7 +29,7 @@ export function browseRepository<F extends (source: string) => any>(
         if (result.length) {
           const path = entry.parentPath.replace(repositoryDirname, '');
 
-          results.push({ filename: path === '' ? entry.name : resolve(path, entry.name), result });
+          results.push({ filename: path === '' ? `/${entry.name}` : resolve(path, entry.name), result });
         }
       }
     } catch (error) {
