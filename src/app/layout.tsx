@@ -19,7 +19,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.GOOGLE_ANALYTICS_ID || '';
   return (
     <html lang="en">
       <body className={cn(pretendard.className)}>
@@ -27,7 +26,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
-      <GoogleAnalytics gaId={gaId} />
+      <GoogleAnalytics gaId="G-ZYC12N99X9" />
     </html>
   );
 }
