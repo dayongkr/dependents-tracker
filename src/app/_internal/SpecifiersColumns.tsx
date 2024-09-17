@@ -39,7 +39,7 @@ export const SpecifiersColumns: ColumnDef<Specifier>[] = [
     cell: ({ cell }) => {
       const link = `https://github.com/${cell.row.original.repository}/blob/${cell.row.original.hash}${cell.row.original.filename}`;
       return (
-        <a href={link} target="blank" className="flex items-center gap-1 hover:underline" rel="noopener">
+        <a href={link} target="blank" className="flex items-center gap-1 hover:underline">
           <FileIcon filename={cell.row.original.filename} />
           {cell.row.original.filename}
         </a>

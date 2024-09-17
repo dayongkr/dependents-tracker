@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Section } from '@/components/Section';
 import { OverviewCard } from './_internal/OverviewCard';
-import { BarChart } from '../components/BarChart';
-import { DonutChart } from '../components/DonutChart';
+import { BarChart } from '@/components/BarChart';
+import { PieChart } from '@/components/PieChart';
 
 export default function Home() {
   const specifiers = getSpecifiers();
@@ -88,28 +88,25 @@ export default function Home() {
             yDataKey="1"
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-2">
-            <DonutChart
+            <PieChart
               data={sortedExtensions.slice(0, 5)}
               title="Top 5 Extensions"
               description="Counted only imported in ESM format."
-              subTitle={sortedExtensions[0][0]}
-              subDescription="that most used"
               nameKey="0"
               dataKey="1"
+              donut={{ title: sortedExtensions[0][0], description: 'Top 1 Extension' }}
             />
-            <DonutChart
+            <PieChart
               data={sortedUsers.slice(0, 5)}
               title="Top 5 Users"
               description="Counted only imported in ESM format."
-              subTitle={sortedUsers[0][0]}
-              subDescription="that most used"
               nameKey="0"
               dataKey="1"
             />
           </div>
         </div>
       </Section>
-      <Section title="All Specifiers">
+      <Section title="Specifiers table">
         <DataTable columns={SpecifiersColumns} data={specifiers} />
       </Section>
     </main>

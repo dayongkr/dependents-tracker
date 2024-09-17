@@ -17,7 +17,7 @@ export function BarChart<T>({
   title: string;
   description: string;
   xDataKey: string & keyof T;
-  yDataKey: string & Omit<keyof T, typeof xDataKey>;
+  yDataKey: string & keyof T;
   label?: string;
 }>) {
   const chartConfig = {
