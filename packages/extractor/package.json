@@ -27,7 +27,9 @@
     "rollup": "^4.20.0",
     "tslib": "^2.6.3"
   },
-  "bin": "bin/index.js",
+  "bin": {
+    "extractor": "bin/index.js"
+  },
   "files": [
     "bin"
   ],

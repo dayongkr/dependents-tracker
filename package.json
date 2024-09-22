@@ -1,6 +1,5 @@
 {
   "name": "dependents-tracker",
-  "private": true,
   "scripts": {
     "web:dev": "pnpm --filter @dependents-tracker/web dev",
     "lint": "eslint -c eslint.config.mjs ."
