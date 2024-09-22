@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { getNextPageUrl, getRepositories } from '../src/scrape';
+import { getNextPageUrl, getRepositories } from '../src/core/scrape';
 
 const html = readFileSync(resolve(import.meta.dirname, './assets/dependents.html'), 'utf-8');
 const lastPage = readFileSync(resolve(import.meta.dirname, './assets/dependents-last-page.html'), 'utf-8');

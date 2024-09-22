@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getImportDeclarations, getImportSpecifiers } from '../src/parse';
+import { getImportDeclarations, getImportSpecifiers } from '../src/core/parse';
 
 describe('getImportDeclarations', () => {
   const lines = [
