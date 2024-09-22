@@ -11,7 +11,7 @@ export function OverviewCard({
     <Card className="w-full min-w-fit">
       <CardHeader className="pb-2">{title}</CardHeader>
       <CardContent>
-        <CardTitle className="mb-2 text-primary">{formattedPrimary}</CardTitle>
+        <CardTitle className="text-primary mb-2">{formattedPrimary}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardContent>
     </Card>
