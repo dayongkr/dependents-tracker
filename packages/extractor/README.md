@@ -23,8 +23,7 @@ Finally, it generates a JSON file with the following structure:
 }
 ```
 
-One more thing to note is that it can collect javascript projects that use the ESM-style imports, which means that it does not collect the CommonJS-style imports or python projects, etc
-. It also can't collect the default imports.
+One more thing to note is that it can collect javascript projects that use the ESM-style imports, which means that it does not collect the CommonJS-style imports or python projects, etc. It also can't collect the default imports.
 
 ```javascript
 // OK
