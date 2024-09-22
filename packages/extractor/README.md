@@ -7,7 +7,7 @@ The CLI tool collects dependents information for a given repository as follows:
 
 Finally, it generates a JSON file with the following structure:
 
-```javascript
+```jsonc
 {
   "repository_name": {
     "imports": [
