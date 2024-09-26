@@ -1,0 +1,38 @@
+name: Data Extractor
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Git
+        run: sudo apt-get install -y git
+
+      - name: Run dependents-tracker extractor
+        run: npx @dependents-tracker/extractor toss/es-toolkit
+
+      - name: Rename result.json to data.json
+        run: mv result.json data.json
+
+      - name: Move data.json to apps/web/public
+        run: mv data.json apps/web/public/data.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add apps/web/public/data.json
+          git commit -m "Update data.json $(date +'%Y-%m-%d')"
+          git push
