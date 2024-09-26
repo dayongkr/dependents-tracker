@@ -20,9 +20,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Git
-        run: sudo apt-get install -y git
-
       - name: Run dependents-tracker extractor
         run: npx @dependents-tracker/extractor toss/es-toolkit
 
@@ -36,6 +33,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch 
           git add apps/web/public/data.json
           git commit -m "Update data.json $(date +'%Y-%m-%d')"
           git push
