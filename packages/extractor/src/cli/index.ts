@@ -25,30 +25,29 @@ const dependents = generateDependents(user, packageName);
 const cloneWorker = new Worker(resolve(import.meta.dirname, './workers/cloneWorker.js'));
 const parseWorker = new Worker(resolve(import.meta.dirname, './workers/parseWorker.js'));
 
-cloneWorker.on('message', ({ value, type, done }: CloneOutDegreeMessage) => {
-  if (type === 'log') {
-    console.log(value);
-    return;
+cloneWorker.on('message', async (message: CloneOutDegreeMessage) => {
+  switch (message.type) {
+    case 'log':
+      console.log(message.value);
+      return;
+    case 'exit':
+      console.log('All done!');
+      cloneWorker.terminate();
+      parseWorker.terminate();
+      return;
+    case 'data':
+      parseWorker.postMessage({
+        value: { ...message.value, packageName },
+      } satisfies ParseInDegreeMessage);
+      return;
+    case 'next':
+      cloneWorker.postMessage({ value: { ...(await dependents.next()), packageName } } satisfies CloneInDegreeMessage);
+      return;
   }
-
-  if (type === 'exit') {
-    console.log('All done!');
-    cloneWorker.terminate();
-    parseWorker.terminate();
-    return;
-  }
-
-  console.log(`Start parsing ${value.dependent}`);
-
-  parseWorker.postMessage({ value: { ...value, packageName }, done } satisfies ParseInDegreeMessage);
 });
 
-parseWorker.on('message', async ({ done, value }: ParseOutDegreeMessage) => {
-  console.log(`Parsed (${value.dependent})`);
-
-  if (done) {
-    cloneWorker.postMessage({ value: { ...(await dependents.next()), packageName } } satisfies CloneInDegreeMessage);
-  }
+parseWorker.on('message', async ({ value }: ParseOutDegreeMessage) => {
+  console.log(`Done (${value.dependent})`);
 
   result[value.dependent] = {
     imports: value.imports,

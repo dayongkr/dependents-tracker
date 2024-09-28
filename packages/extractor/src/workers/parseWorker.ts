@@ -4,16 +4,14 @@ import { browseRepository, clearRepository } from '../core/repository';
 
 export type ParseOutDegreeMessage = {
   value: { imports: { filename: string; specifiers: string[] }[]; hash: string; dependent: string };
-  done?: boolean;
 };
 export type ParseInDegreeMessage = {
   value: { dependent: string; packageName: string; repositoryDirname: string; hash: string; hit: boolean };
-  done?: boolean;
 };
 
 parentPort?.on(
   'message',
-  ({ value: { dependent, packageName, repositoryDirname, hash, hit }, done }: ParseInDegreeMessage) => {
+  ({ value: { dependent, packageName, repositoryDirname, hash, hit } }: ParseInDegreeMessage) => {
     if (!hit) {
       const importData = browseRepository(repositoryDirname, ['.sh'], (source) => {
         const importDeclarations = getImportDeclarations(source, packageName);
@@ -25,7 +23,6 @@ parentPort?.on(
 
       parentPort?.postMessage({
         value: { imports: importData, hash, dependent },
-        done,
       } satisfies ParseOutDegreeMessage);
     }
   }
