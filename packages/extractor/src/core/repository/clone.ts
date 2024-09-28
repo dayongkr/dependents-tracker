@@ -2,11 +2,13 @@ import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-export function cloneRepository(fullname: string): {
+export type CloneInfo = {
   repositoryDirname: string;
   hash: string;
   hit: boolean;
-} {
+};
+
+export function cloneRepository(fullname: string): CloneInfo {
   const tempDirname = resolve(import.meta.dirname, './.temp');
   const repositoryName = fullname.split('/')[1];
   const repositoryDirname = resolve(import.meta.dirname, `./.temp/${repositoryName}`);
