@@ -21,10 +21,13 @@ const result: {
   };
 } = {};
 
-for await (const dependent of generateDependents(user, packageName)) {
-  const filteredDependents = dependent.filter((dep) => dep !== `${user}/${packageName}`);
+for await (const dependents of generateDependents(user, packageName)) {
+  for (const [index, dependent] of dependents.entries()) {
+    if (dependent.endsWith(`/${packageName}`)) {
+      console.log(`Skip (${dependent}): This is the package itself or a fork`);
+      continue;
+    }
 
-  for (const [index, dependent] of filteredDependents.entries()) {
     const { repositoryDirname, hash, hit } = cloneRepository(dependent);
 
     if (!hit) {
@@ -45,6 +48,6 @@ for await (const dependent of generateDependents(user, packageName)) {
     });
     clearRepository(repositoryDirname);
 
-    console.log(`Done: ${index + 1}/${filteredDependents.length}`);
+    console.log(`Done (${dependent}): ${index + 1}/${dependents.length}`);
   }
 }
