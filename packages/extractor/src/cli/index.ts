@@ -18,7 +18,6 @@ const result: {
       specifiers: string[];
     }[];
     hash: string;
-    branch: string;
   };
 } = {};
 
@@ -26,7 +25,7 @@ for await (const dependent of generateDependents(user, packageName)) {
   const filteredDependents = dependent.filter((dep) => dep !== `${user}/${packageName}`);
 
   for (const [index, dependent] of filteredDependents.entries()) {
-    const { repositoryDirname, hash, branch, hit } = cloneRepository(dependent);
+    const { repositoryDirname, hash, hit } = cloneRepository(dependent);
 
     if (!hit) {
       const importData = browseRepository(repositoryDirname, ['.sh'], (source) => {
@@ -38,7 +37,6 @@ for await (const dependent of generateDependents(user, packageName)) {
       result[dependent] = {
         imports: importData,
         hash,
-        branch,
       };
     }
 

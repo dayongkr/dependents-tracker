@@ -5,7 +5,6 @@ import { resolve } from 'node:path';
 export function cloneRepository(fullname: string): {
   repositoryDirname: string;
   hash: string;
-  branch: string;
   hit: boolean;
 } {
   const tempDirname = resolve(import.meta.dirname, './.temp');
@@ -31,15 +30,10 @@ export function cloneRepository(fullname: string): {
     encoding: 'utf-8',
   }).trim();
 
-  const branch = execSync('git branch --show-current', {
-    cwd: repositoryDirname,
-    encoding: 'utf-8',
-  }).trim();
-
   execSync(`git checkout`, {
     stdio: 'ignore',
     cwd: repositoryDirname,
   });
 
-  return { repositoryDirname, hash: headHash, branch, hit: false };
+  return { repositoryDirname, hash: headHash, hit: false };
 }
