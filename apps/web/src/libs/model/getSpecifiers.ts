@@ -5,7 +5,6 @@ export type Specifier = {
   repository: string;
   filename: string;
   hash: string;
-  branch: string;
 };
 
 export function getSpecifiers(): Specifier[] {
@@ -18,7 +17,6 @@ export function getSpecifiers(): Specifier[] {
           repository: item.repository,
           filename: imported.filename,
           hash: item.hash,
-          branch: item.branch,
         }))
       )
     )
