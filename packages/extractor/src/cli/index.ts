@@ -22,13 +22,13 @@ const result: {
 } = {};
 
 for await (const dependents of generateDependents(user, packageName)) {
-  for (const [index, dependent] of dependents.entries()) {
+  const promises = dependents.map(async (dependent) => {
     if (dependent.endsWith(`/${packageName}`)) {
       console.log(`Skip (${dependent}): This is the package itself or a fork`);
-      continue;
     }
 
     const { repositoryDirname, hash, hit } = cloneRepository(dependent);
+    console.log(`Cloned (${dependent}): ${repositoryDirname}`);
 
     if (!hit) {
       const importData = browseRepository(repositoryDirname, ['.sh'], (source) => {
@@ -41,13 +41,14 @@ for await (const dependents of generateDependents(user, packageName)) {
         imports: importData,
         hash,
       };
+      console.log(`Parsed (${dependent}): ${importData.length} files`);
     }
-
-    writeFileSync(resolve(process.cwd(), './result.json'), JSON.stringify(result), {
-      encoding: 'utf-8',
-    });
     clearRepository(repositoryDirname);
+  });
 
-    console.log(`Done (${dependent}): ${index + 1}/${dependents.length}`);
-  }
+  writeFileSync(resolve(process.cwd(), './result.json'), JSON.stringify(result), {
+    encoding: 'utf-8',
+  });
+
+  await Promise.all(promises);
 }
