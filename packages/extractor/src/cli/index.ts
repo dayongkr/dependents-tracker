@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
 import { writeFileSync } from 'node:fs';
-import { getImportDeclarations, getImportSpecifiers } from '../core/parse';
-import { browseRepository } from '../core/repository/browse';
-import { clearRepository } from '../core/repository/clear';
-import { cloneRepository } from '../core/repository/clone';
 import { resolve } from 'node:path';
+import { Worker } from 'node:worker_threads';
 import { generateDependents } from '../core/scrape';
+import type { CloneInDegreeMessage, CloneOutDegreeMessage } from '../workers/cloneWorker';
+import type { ParseInDegreeMessage, ParseOutDegreeMessage } from '../workers/parseWorker';
 
 const target = process.argv[2];
 const [user, packageName] = target.split('/');
@@ -21,34 +20,45 @@ const result: {
   };
 } = {};
 
-for await (const dependents of generateDependents(user, packageName)) {
-  const promises = dependents.map(async (dependent) => {
-    if (dependent.endsWith(`/${packageName}`)) {
-      console.log(`Skip (${dependent}): This is the package itself or a fork`);
-    }
+const dependents = generateDependents(user, packageName);
 
-    const { repositoryDirname, hash, hit } = cloneRepository(dependent);
-    console.log(`Cloned (${dependent}): ${repositoryDirname}`);
+const cloneWorker = new Worker(resolve(import.meta.dirname, './workers/cloneWorker.js'));
+const parseWorker = new Worker(resolve(import.meta.dirname, './workers/parseWorker.js'));
 
-    if (!hit) {
-      const importData = browseRepository(repositoryDirname, ['.sh'], (source) => {
-        const importDeclarations = getImportDeclarations(source, packageName);
-        const importSpecifiers = importDeclarations.flatMap(getImportSpecifiers);
-        return importSpecifiers;
-      }).map(({ filename, result }) => ({ filename, specifiers: result }));
+cloneWorker.on('message', ({ value, type, done }: CloneOutDegreeMessage) => {
+  if (type === 'log') {
+    console.log(value);
+    return;
+  }
 
-      result[dependent] = {
-        imports: importData,
-        hash,
-      };
-      console.log(`Parsed (${dependent}): ${importData.length} files`);
-    }
-    clearRepository(repositoryDirname);
-  });
+  if (type === 'exit') {
+    console.log('All done!');
+    cloneWorker.terminate();
+    parseWorker.terminate();
+    return;
+  }
+
+  console.log(`Start parsing ${value.dependent}`);
+
+  parseWorker.postMessage({ value: { ...value, packageName }, done } satisfies ParseInDegreeMessage);
+});
+
+parseWorker.on('message', async ({ done, value }: ParseOutDegreeMessage) => {
+  console.log(`Parsed (${value.dependent})`);
+
+  if (done) {
+    cloneWorker.postMessage({ value: { ...(await dependents.next()), packageName } } satisfies CloneInDegreeMessage);
+  }
+
+  result[value.dependent] = {
+    imports: value.imports,
+    hash: value.hash,
+  };
 
   writeFileSync(resolve(process.cwd(), './result.json'), JSON.stringify(result), {
     encoding: 'utf-8',
   });
+});
 
-  await Promise.all(promises);
-}
+// Start the process
+cloneWorker.postMessage({ value: { ...(await dependents.next()), packageName } } satisfies CloneInDegreeMessage);
