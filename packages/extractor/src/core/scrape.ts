@@ -28,9 +28,8 @@ export function getRepositories(html: string): string[] {
   return matched;
 }
 
-export async function getDependents(repositoryOwner: string, repositoryName: string): Promise<string[]> {
+export async function* generateDependents(repositoryOwner: string, repositoryName: string) {
   let dependentsUrl: string | null = `https://github.com/${repositoryOwner}/${repositoryName}/network/dependents`;
-  const dependents: string[] = [];
 
   while (dependentsUrl !== null) {
     const dependentsPageRes = await fetch(dependentsUrl);
@@ -43,10 +42,7 @@ export async function getDependents(repositoryOwner: string, repositoryName: str
     const repositories = getRepositories(dependentsPageText);
 
     console.log(`Got ${repositories.length} dependents from ${dependentsUrl}`);
-
-    dependents.push(...repositories);
+    yield repositories;
     dependentsUrl = getNextPageUrl(dependentsPageText, repositoryOwner, repositoryName);
   }
-  console.log(`Got ${dependents.length} dependents in total`);
-  return dependents;
 }
