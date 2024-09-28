@@ -31,12 +31,12 @@ cloneWorker.on('message', async (message: CloneOutDegreeMessage) => {
       console.log(message.value);
       return;
     case 'exit':
-      console.log('All done!');
       cloneWorker.terminate();
-      parseWorker.terminate();
+      parseWorker.postMessage({ type: 'exit' } satisfies ParseInDegreeMessage);
       return;
     case 'data':
       parseWorker.postMessage({
+        type: 'data',
         value: { ...message.value, packageName },
       } satisfies ParseInDegreeMessage);
       return;
