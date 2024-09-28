@@ -1,3 +1,5 @@
+import { fetcher } from './_internal/fetcher';
+
 export function getNextPageUrl(html: string, user: string, repository: string): string | null {
   const urlPattern = `https://github.com/${user}/${repository}/network/dependents\\?dependents_after=[\\w\\d]+`;
   const lookbehindPattern = `(?<=href=")`;
@@ -28,11 +30,14 @@ export function getRepositories(html: string): string[] {
   return matched;
 }
 
-export async function* generateDependents(repositoryOwner: string, repositoryName: string) {
+export async function* generateDependents(
+  repositoryOwner: string,
+  repositoryName: string
+): AsyncGenerator<string[] | undefined> {
   let dependentsUrl: string | null = `https://github.com/${repositoryOwner}/${repositoryName}/network/dependents`;
 
   while (dependentsUrl !== null) {
-    const dependentsPageRes = await fetch(dependentsUrl);
+    const dependentsPageRes = await fetcher(dependentsUrl);
 
     if (!dependentsPageRes.ok) {
       throw new Error('Failed to fetch dependents page');
