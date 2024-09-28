@@ -9,7 +9,7 @@ const sharedConfig = {
     }),
     !isWatch && terser(),
   ],
-  external: ['node:fs', 'node:child_process', 'node:path', 'node:url', 'node:worker_threads'],
+  external: ['node:fs', 'node:child_process', 'node:path', 'node:url', 'node:worker_threads', 'node:crypto'],
 };
 
 export default [

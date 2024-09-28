@@ -1,6 +1,7 @@
 import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
 
 export type CloneInfo = {
   repositoryDirname: string;
@@ -9,8 +10,8 @@ export type CloneInfo = {
 };
 
 export function cloneRepository(fullname: string): CloneInfo {
-  const [username, repositoryName] = fullname.split('/');
-  const tempDirname = resolve(process.cwd(), './.temp-dependents-extractor', `./${username}`);
+  const tempDirname = resolve(process.cwd(), './.temp-dependents-extractor', `./${randomUUID()}`);
+  const repositoryName = fullname.split('/')[1];
   const repositoryDirname = resolve(tempDirname, `./${repositoryName}`);
 
   if (!existsSync(tempDirname)) {
