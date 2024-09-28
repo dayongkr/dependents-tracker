@@ -9,12 +9,12 @@ export type CloneInfo = {
 };
 
 export function cloneRepository(fullname: string): CloneInfo {
-  const tempDirname = resolve(import.meta.dirname, './.temp');
-  const repositoryName = fullname.split('/')[1];
-  const repositoryDirname = resolve(import.meta.dirname, `./.temp/${repositoryName}`);
+  const [username, repositoryName] = fullname.split('/');
+  const tempDirname = resolve(process.cwd(), './.temp-dependents-extractor', `./${username}`);
+  const repositoryDirname = resolve(tempDirname, `./${repositoryName}`);
 
   if (!existsSync(tempDirname)) {
-    mkdirSync(tempDirname);
+    mkdirSync(tempDirname, { recursive: true });
   }
 
   if (existsSync(repositoryDirname)) {
