@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
 
       - name: Run dependents-tracker extractor
-        run: npx @dependents-tracker/extractor toss/es-toolkit
+        run: npx @dependents-tracker/extractor toss/es-toolkit apps/web/public/data.json
 
       - name: Rename result.json to data.json
         run: mv result.json data.json
@@ -33,7 +33,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch 
+          git pull
           git add apps/web/public/data.json
           git commit -m "Update data.json $(date +'%Y-%m-%d')"
           git push
