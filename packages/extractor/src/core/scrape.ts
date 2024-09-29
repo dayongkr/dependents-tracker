@@ -1,4 +1,5 @@
 import { fetcher } from './_internal/fetcher';
+import { Result } from './data';
 
 export function getNextPageUrl(html: string, user: string, repository: string): string | null {
   const urlPattern = `https://github.com/${user}/${repository}/network/dependents\\?dependents_after=[\\w\\d]+`;
@@ -32,8 +33,9 @@ export function getRepositories(html: string): string[] {
 
 export async function* generateDependents(
   repositoryOwner: string,
-  repositoryName: string
-): AsyncGenerator<string[] | undefined> {
+  repositoryName: string,
+  result: Result
+): AsyncGenerator<{ dependent: string; hash: string }[]> {
   let dependentsUrl: string | null = `https://github.com/${repositoryOwner}/${repositoryName}/network/dependents`;
 
   while (dependentsUrl !== null) {
@@ -47,7 +49,10 @@ export async function* generateDependents(
     const repositories = getRepositories(dependentsPageText);
 
     console.log(`Got ${repositories.length} dependents from ${dependentsUrl}`);
-    yield repositories;
+    yield repositories.map((repository) => ({
+      dependent: repository,
+      hash: result[repository]?.hash ?? '',
+    }));
     dependentsUrl = getNextPageUrl(dependentsPageText, repositoryOwner, repositoryName);
   }
 }

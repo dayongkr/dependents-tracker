@@ -9,7 +9,7 @@ export type CloneInfo = {
   hit: boolean;
 };
 
-export function cloneRepository(fullname: string): CloneInfo {
+export function cloneRepository(fullname: string, previousHash: string): CloneInfo {
   const tempDirname = resolve(process.cwd(), './.temp-dependents-extractor', `./${randomUUID()}`);
   const repositoryName = fullname.split('/')[1];
   const repositoryDirname = resolve(tempDirname, `./${repositoryName}`);
@@ -32,6 +32,10 @@ export function cloneRepository(fullname: string): CloneInfo {
     cwd: repositoryDirname,
     encoding: 'utf-8',
   }).trim();
+
+  if (headHash === previousHash) {
+    return { repositoryDirname, hash: headHash, hit: true };
+  }
 
   execSync(`git checkout`, {
     stdio: 'ignore',
