@@ -7,7 +7,7 @@ The CLI tool collects dependents information for a given repository as follows:
 
 Finally, it generates a JSON file with the following structure:
 
-```jsonc
+```json
 {
   "repository_name": {
     "imports": [
@@ -16,8 +16,7 @@ Finally, it generates a JSON file with the following structure:
         "specifiers": ["imported_module", "imported_module2"]
       }
     ],
-    "hash": "3d129uasf...", // hash of the HEAD commit
-    "branch": "main" // main branch of the repository
+    "hash": "3d129uasf...",
   }
   ...
 }
@@ -34,6 +33,8 @@ const foo = require('bar');
 import foo from 'bar';
 ```
 
+And it runs in concurrent mode, so it can collect the dependents faster.
+
 ## Prerequisites
 
 - `git` installed on your machine.
@@ -43,11 +44,11 @@ import foo from 'bar';
 ## Usage
 
 ```bash
-npx @dependents-tracker/extractor <repository_name>
+npx @dependents-tracker/extractor <repository_name> [<file_path of `result.json`>]
 ```
 
-At now, the CLI tool only supports above command. The repository name should be in the format of `owner/repo`.
+At now, the CLI tool only supports above command. The `repository_name` should be in the format of `owner/repo`. And If you have a previously generated `result.json` file, you can pass the file path as the second argument. Then the CLI tool will use the existing data and only collect the new dependents.
 
-After running the command, the CLI tool will generate a JSON file in the current directory with the name `dependents.json`.
+After running the command, the CLI tool will generate a JSON file in the current directory with the name `result.json`.
 
 > Note: This project is still under development, so there might be some bugs or issues. If you encounter any, please report them.
