@@ -20,7 +20,12 @@ type NextMessage = {
   type: 'next';
 };
 
-export type CloneOutDegreeMessage = LogMessage | CloneInfoMessage | ProcessExitMessage | NextMessage;
+type DependentMessage = {
+  type: 'dependent';
+  value: string;
+};
+
+export type CloneOutDegreeMessage = LogMessage | CloneInfoMessage | ProcessExitMessage | NextMessage | DependentMessage;
 export type CloneInDegreeMessage = {
   value: { value: { dependent: string; hash: string }[] | undefined; done?: boolean; packageName: string };
 };
@@ -33,6 +38,7 @@ parentPort?.on('message', ({ value: { value, done, packageName } }: CloneInDegre
 
   for (let i = 0; i < value.length; i++) {
     const { dependent, hash: previousHash } = value[i];
+    parentPort?.postMessage({ type: 'dependent', value: dependent } satisfies CloneOutDegreeMessage);
 
     // Skip the package itself or a forked repository of the package
     if (dependent.endsWith(`/${packageName}`)) {

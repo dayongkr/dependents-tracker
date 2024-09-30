@@ -13,19 +13,18 @@ const [user, packageName] = target.split('/');
 
 const result: Result = loadData(dataFilename);
 const dependents = generateDependents(user, packageName, result);
+const dependentsSet = new Set<string>();
 
 const cloneWorker = new Worker(resolve(import.meta.dirname, './workers/cloneWorker.js'));
 const parseWorker = new Worker(resolve(import.meta.dirname, './workers/parseWorker.js'));
 
 cloneWorker.on('message', async (message: CloneOutDegreeMessage) => {
   switch (message.type) {
+    case 'dependent':
+      dependentsSet.add(message.value);
+      return;
     case 'log':
       console.log(message.value);
-      return;
-    case 'exit':
-      // For graceful termination (using event loop)
-      parseWorker.postMessage({ type: 'exit' } satisfies ParseInDegreeMessage);
-      cloneWorker.terminate();
       return;
     case 'data':
       // Send the data to the parse worker
@@ -38,6 +37,19 @@ cloneWorker.on('message', async (message: CloneOutDegreeMessage) => {
       // Get the next batch of dependents from the generator and send them to the clone worker
       cloneWorker.postMessage({ value: { ...(await dependents.next()), packageName } } satisfies CloneInDegreeMessage);
       return;
+    case 'exit':
+      for (const key of Object.keys(result)) {
+        // Remove the data of the repositories that are not in the dependents set
+        if (!dependentsSet.has(key)) {
+          delete result[key];
+        }
+      }
+
+      saveData(dataFilename, result);
+      // For graceful termination (using event loop)
+      parseWorker.postMessage({ type: 'exit' } satisfies ParseInDegreeMessage);
+      cloneWorker.terminate();
+      return;
   }
 });
 
@@ -48,9 +60,6 @@ parseWorker.on('message', async ({ value }: ParseOutDegreeMessage) => {
     imports: value.imports,
     hash: value.hash,
   };
-
-  // Save the result to the file
-  saveData('./result.json', result);
 });
 
 // Start the process
