@@ -1,5 +1,5 @@
 export function getImportDeclarations(source: string, packageName: string): string[] {
-  const regex = new RegExp(`import[^'"]*['"]${packageName}`, 'gs');
+  const regex = new RegExp(`^[ \\t]*import[^'"]*['"]${packageName}`, 'gm');
   const matches = source.match(regex);
 
   if (matches === null) {
@@ -19,7 +19,9 @@ export function getImportSpecifiers(importDeclaration: string): string[] {
 
   const unwrapped = matches[0].slice(1, -1);
   const specifiers = unwrapped.split(',').map((specifier) => specifier.trim().split(' as ')[0]);
-  const filtered = specifiers.filter((specifier) => !specifier.includes('/') && specifier);
+  const filtered = specifiers.filter(
+    (specifier) => !['/', '*', '{', '}'].some((item) => specifier.includes(item)) && specifier
+  );
 
   return filtered;
 }
