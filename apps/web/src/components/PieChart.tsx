@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Label, LabelList, Pie, PieChart as PieChartRecharts } from 'recharts';
+import { Label, Pie, PieChart as PieChartRecharts } from 'recharts';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/shadcn/chart';
@@ -48,8 +48,15 @@ export function PieChart<T>({
         <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
           <PieChartRecharts>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Pie data={coloredData} dataKey={dataKey} nameKey={nameKey} innerRadius={donut ? 60 : 0} strokeWidth={5}>
-              {donut ? (
+            <Pie
+              data={coloredData}
+              dataKey={dataKey}
+              nameKey={nameKey}
+              innerRadius={donut ? 60 : 0}
+              strokeWidth={5}
+              label={!donut}
+            >
+              {donut && (
                 <Label
                   content={({ viewBox }) => {
                     if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -65,14 +72,6 @@ export function PieChart<T>({
                       );
                     }
                   }}
-                />
-              ) : (
-                <LabelList
-                  dataKey={nameKey}
-                  stroke="none"
-                  className="fill-background font-semibold"
-                  offset={10}
-                  fontSize={12}
                 />
               )}
             </Pie>
