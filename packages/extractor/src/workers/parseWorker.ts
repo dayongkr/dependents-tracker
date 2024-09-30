@@ -1,23 +1,21 @@
 import { parentPort } from 'node:worker_threads';
 import { getImportDeclarations, getImportSpecifiers } from '../core/parse';
 import { browseRepository, clearRepository } from '../core/repository';
+import { CloneInfoMessage, ProcessExitMessage } from './cloneWorker';
 
-type ExitMessage = { type: 'exit' };
-type RepositoryInfoMessage = {
-  type: 'data';
-  value: { dependent: string; packageName: string; repositoryDirname: string; hash: string; hit: boolean };
-};
+type RepositoryInfoMessage = CloneInfoMessage & { value: { packageName: string } };
 
 export type ParseOutDegreeMessage = {
   value: { imports: { filename: string; specifiers: string[] }[]; hash: string; dependent: string };
 };
-export type ParseInDegreeMessage = ExitMessage | RepositoryInfoMessage;
+export type ParseInDegreeMessage = ProcessExitMessage | RepositoryInfoMessage;
 
 parentPort?.on('message', (message: ParseInDegreeMessage) => {
   if (message.type === 'exit') {
     parentPort?.close();
     return;
   }
+
   if (!message.value.hit) {
     const { dependent, packageName, repositoryDirname, hash } = message.value;
     const importData = browseRepository(repositoryDirname, ['.sh'], (source) => {

@@ -1,17 +1,18 @@
 import { parentPort } from 'node:worker_threads';
 import { CloneInfo, cloneRepository } from '../core/repository/clone';
+import { clearRepository } from '../core/repository';
 
 type LogMessage = {
   type: 'log';
   value: string;
 };
 
-type CloneInfoMessage = {
+export type CloneInfoMessage = {
   type: 'data';
   value: CloneInfo & { dependent: string };
 };
 
-type ProcessExitMessage = {
+export type ProcessExitMessage = {
   type: 'exit';
 };
 
@@ -32,6 +33,8 @@ parentPort?.on('message', ({ value: { value, done, packageName } }: CloneInDegre
 
   for (let i = 0; i < value.length; i++) {
     const { dependent, hash: previousHash } = value[i];
+
+    // Skip the package itself or a forked repository of the package
     if (dependent.endsWith(`/${packageName}`)) {
       parentPort?.postMessage({
         type: 'log',
@@ -43,7 +46,10 @@ parentPort?.on('message', ({ value: { value, done, packageName } }: CloneInDegre
     try {
       const { repositoryDirname, hash, hit } = cloneRepository(dependent, previousHash);
 
+      // Skip the repository if the hash is the same as the previous one
       if (hit) {
+        clearRepository(repositoryDirname);
+
         parentPort?.postMessage({
           type: 'log',
           value: `Skip (${dependent}): Hit the cache`,
@@ -56,6 +62,7 @@ parentPort?.on('message', ({ value: { value, done, packageName } }: CloneInDegre
         value: { dependent, repositoryDirname, hash, hit },
       } satisfies CloneOutDegreeMessage);
     } catch (error) {
+      // Skip the repository if an error occurred
       if (error instanceof Error) {
         parentPort?.postMessage({
           type: 'log',
@@ -65,5 +72,6 @@ parentPort?.on('message', ({ value: { value, done, packageName } }: CloneInDegre
     }
   }
 
+  // All the repositories are processed and the next batch is requested
   parentPort?.postMessage({ type: 'next' } satisfies CloneOutDegreeMessage);
 });

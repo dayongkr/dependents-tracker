@@ -14,6 +14,7 @@ export function browseRepository<F extends (source: string) => any>(
   while (stack.length > 0) {
     const entry = stack.pop();
 
+    // Skip the entry if it is null or matches the default excludes
     if (entry == null || defaultExcludes.some((exclude) => entry.name.includes(exclude))) {
       continue;
     }
@@ -21,6 +22,7 @@ export function browseRepository<F extends (source: string) => any>(
     try {
       if (entry.isDirectory()) {
         const subEntries = readdirSync(resolve(entry.parentPath, entry.name), { withFileTypes: true });
+
         stack.push(...subEntries);
       } else {
         const source = readFileSync(resolve(entry.parentPath, entry.name), 'utf-8');

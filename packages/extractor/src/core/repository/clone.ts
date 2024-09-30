@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process';
-import { existsSync, mkdirSync, rmSync } from 'node:fs';
+import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 
@@ -14,13 +14,7 @@ export function cloneRepository(fullname: string, previousHash: string): CloneIn
   const repositoryName = fullname.split('/')[1];
   const repositoryDirname = resolve(tempDirname, `./${repositoryName}`);
 
-  if (!existsSync(tempDirname)) {
-    mkdirSync(tempDirname, { recursive: true });
-  }
-
-  if (existsSync(repositoryDirname)) {
-    rmSync(repositoryDirname, { recursive: true });
-  }
+  mkdirSync(tempDirname, { recursive: true });
 
   // At first, we clone the repository only with the .git directory and a recent commit.
   execSync(`git clone https://github.com/${fullname}.git --depth=1 --no-checkout --filter=blob:none`, {
@@ -33,6 +27,7 @@ export function cloneRepository(fullname: string, previousHash: string): CloneIn
     encoding: 'utf-8',
   }).trim();
 
+  // If the head hash is the same as the previous one, we don't need to checkout the repository.
   if (headHash === previousHash) {
     return { repositoryDirname, hash: headHash, hit: true };
   }
