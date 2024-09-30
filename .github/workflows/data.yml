@@ -23,12 +23,6 @@ jobs:
       - name: Run dependents-tracker extractor
         run: npx @dependents-tracker/extractor toss/es-toolkit apps/web/public/data.json
 
-      - name: Rename result.json to data.json
-        run: mv result.json data.json
-
-      - name: Move data.json to apps/web/public
-        run: mv data.json apps/web/public/data.json
-
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
