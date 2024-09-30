@@ -1,47 +1,26 @@
-import { DataTable } from '@/components/shadcn/data-table';
-import { getSpecifiers } from '@/libs/model/getSpecifiers';
-import { SpecifiersColumns } from './_internal/SpecifiersColumns';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Section } from '@/components/Section';
-import { OverviewCard } from './_internal/OverviewCard';
 import { BarChart } from '@/components/BarChart';
 import { PieChart } from '@/components/PieChart';
+import { Section } from '@/components/Section';
+import { DataTable } from '@/components/shadcn/data-table';
+import { getSpecifiers } from '@/libs/model/getSpecifiers';
+import { countBy, getTopN, sortBy } from '@/libs/utils';
+import { OverviewCard } from './_internal/OverviewCard';
+import { SpecifiersColumns } from './_internal/SpecifiersColumns';
 
 export default function Home() {
-  const specifiers = getSpecifiers();
+  const specifiers = sortBy(getSpecifiers(), (a, b) => a.specifier.localeCompare(b.specifier));
 
-  const countByRepositories = new Map<string, number>();
-  const countBySpecifiers = new Map<string, number>();
-  const countByExtensions = new Map<string, number>();
-  const countByUsers = new Map<string, number>();
+  const countByRepositories = countBy(specifiers, (specifier) => specifier.repository);
+  const countBySpecifiers = countBy(specifiers, (specifier) => specifier.specifier);
+  const countByExtensions = countBy(specifiers, (specifier) => specifier.filename.toLowerCase().split('.').pop() ?? '');
+  const countByUsers = countBy(specifiers, (specifier) => specifier.repository.split('/')[0]);
 
-  const uniqueFilename = new Set<string>();
-  const uniqueRepositories = new Set(specifiers.map((specifier) => specifier.repository));
-
-  for (const specifier of specifiers) {
-    const extension = specifier.filename.toLowerCase().split('.').pop() ?? '';
-    const user = specifier.repository.split('/')[0];
-
-    const countByRepository = countByRepositories.get(specifier.repository) ?? 0;
-    const countBySpecifier = countBySpecifiers.get(specifier.specifier) ?? 0;
-    const countByExtension = countByExtensions.get(extension) ?? 0;
-    const countByUser = countByUsers.get(user) ?? 0;
-
-    countByRepositories.set(specifier.repository, countByRepository + 1);
-    countBySpecifiers.set(specifier.specifier, countBySpecifier + 1);
-    countByUsers.set(user, countByUser + 1);
-
-    if (!uniqueFilename.has(specifier.filename)) {
-      countByExtensions.set(extension, countByExtension + 1);
-      uniqueFilename.add(specifier.filename);
-    }
-  }
-
-  const sortedRepositories = Array.from(countByRepositories.entries()).sort((a, b) => b[1] - a[1]);
-  const sortedSpecifiers = Array.from(countBySpecifiers.entries()).sort((a, b) => b[1] - a[1]);
-  const sortedExtensions = Array.from(countByExtensions.entries()).sort((a, b) => b[1] - a[1]);
-  const sortedUsers = Array.from(countByUsers.entries()).sort((a, b) => b[1] - a[1]);
+  const sortedRepositories = sortBy(Array.from(countByRepositories.entries()), (a, b) => b[1] - a[1]);
+  const sortedSpecifiers = sortBy(Array.from(countBySpecifiers.entries()), (a, b) => b[1] - a[1]);
+  const sortedExtensions = sortBy(Array.from(countByExtensions.entries()), (a, b) => b[1] - a[1]);
+  const sortedUsers = sortBy(Array.from(countByUsers.entries()), (a, b) => b[1] - a[1]);
 
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
@@ -55,7 +34,7 @@ export default function Home() {
         />
         <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
       </Link>
-      <Section title="Overview">
+      <Section title="Overview" className="gap-3">
         <div className="overflow-x-auto">
           <div className="flex gap-3 text-nowrap">
             <OverviewCard
@@ -65,7 +44,7 @@ export default function Home() {
             />
             <OverviewCard
               title="Total Repositories"
-              primary={uniqueRepositories.size}
+              primary={sortedRepositories.length}
               description="Only used repositories were counted, not just installed."
             />
             <OverviewCard
@@ -86,7 +65,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
           <BarChart
-            data={sortedSpecifiers.slice(0, 10)}
+            data={getTopN(sortedRepositories, 10)}
             title="Top 10 Specifiers"
             description="Only ESM format imports."
             xDataKey="0"
@@ -95,7 +74,7 @@ export default function Home() {
           />
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-2">
             <PieChart
-              data={sortedExtensions.slice(0, 5)}
+              data={getTopN(sortedExtensions, 5)}
               title="Top 5 Extensions"
               description="that imported the most frequently."
               nameKey="0"
@@ -103,7 +82,7 @@ export default function Home() {
               donut={{ title: sortedExtensions[0][0], description: 'Top 1 Extension' }}
             />
             <PieChart
-              data={sortedUsers.slice(0, 5)}
+              data={getTopN(sortedUsers, 5)}
               title="Top 5 Users"
               description="who imported the most frequently."
               nameKey="0"
