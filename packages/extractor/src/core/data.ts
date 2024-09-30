@@ -12,17 +12,17 @@ export type Result = {
 };
 
 export function loadData(filename: string): Result {
-  if (existsSync(resolve(process.cwd(), filename))) {
-    const rawData = readFileSync(resolve(process.cwd(), filename), { encoding: 'utf-8' });
-    const data = JSON.parse(rawData);
-
-    console.log(`Loaded data(${Object.keys(data).length}) from ${filename}`);
-
-    return data;
+  if (!filename || existsSync(resolve(process.cwd(), filename))) {
+    console.log('No data file found');
+    return {};
   }
 
-  console.log('No data file found');
-  return {};
+  const rawData = readFileSync(resolve(process.cwd(), filename), { encoding: 'utf-8' });
+  const data = JSON.parse(rawData);
+
+  console.log(`Loaded data(${Object.keys(data).length}) from ${filename}`);
+
+  return data;
 }
 
 export function saveData(filename: string, data: Result): void {

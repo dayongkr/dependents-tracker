@@ -9,6 +9,13 @@ import type { ParseInDegreeMessage, ParseOutDegreeMessage } from '../workers/par
 
 const target = process.argv[2];
 const dataFilename = process.argv[3];
+
+if (!target) {
+  console.error('Please provide the target repository');
+  console.error('Usage: npx dependents-extractor <target>');
+  process.exit(1);
+}
+
 const [user, packageName] = target.split('/');
 
 const result: Result = loadData(dataFilename);
