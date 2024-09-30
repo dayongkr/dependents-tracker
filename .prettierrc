@@ -8,12 +8,14 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^@(.*)$", "^[./]", "^[../]"],
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
   "overrides": [
     {
       "files": "*.tsx",
-      "options": {
-        "plugins": ["prettier-plugin-tailwindcss"]
-      }
+      "options": { "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"] }
     }
   ]
 }

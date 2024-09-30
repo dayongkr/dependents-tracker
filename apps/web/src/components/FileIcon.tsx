@@ -1,11 +1,11 @@
-import VscodeIconsFileTypeTypescriptOfficial from '~icons/vscode-icons/file-type-typescript-official';
+import VscodeIconsDefaultFile from '~icons/vscode-icons/default-file';
 import VscodeIconsFileTypeJsOfficial from '~icons/vscode-icons/file-type-js-official';
-import VscodeIconsFileTypeVue from '~icons/vscode-icons/file-type-vue';
+import VscodeIconsFileTypeMarkdown from '~icons/vscode-icons/file-type-markdown';
 import VscodeIconsFileTypeReactjs from '~icons/vscode-icons/file-type-reactjs';
 import VscodeIconsFileTypeReactts from '~icons/vscode-icons/file-type-reactts';
 import VscodeIconsFileTypeSvelte from '~icons/vscode-icons/file-type-svelte';
-import VscodeIconsFileTypeMarkdown from '~icons/vscode-icons/file-type-markdown';
-import VscodeIconsDefaultFile from '~icons/vscode-icons/default-file';
+import VscodeIconsFileTypeTypescriptOfficial from '~icons/vscode-icons/file-type-typescript-official';
+import VscodeIconsFileTypeVue from '~icons/vscode-icons/file-type-vue';
 
 const IconMap = new Map<string, (props: React.SVGProps<SVGSVGElement>) => React.ReactElement>();
 

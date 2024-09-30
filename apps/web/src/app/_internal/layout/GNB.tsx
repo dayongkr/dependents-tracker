@@ -1,6 +1,6 @@
-import { GitHubLogoIcon } from '@radix-ui/react-icons';
 import { Binoculars } from 'lucide-react';
 import Link from 'next/link';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
 
 export function GNB() {
   return (

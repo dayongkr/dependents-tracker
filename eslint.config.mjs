@@ -1,13 +1,13 @@
-import globals from 'globals';
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import prettier from 'eslint-plugin-prettier/recommended';
-import nextPlugin from '@next/eslint-plugin-next';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import eslint from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default [
-  { ignores: ['**/dist/**', '**/node_modules/**', '**/.next/**'] },
+  { ignores: ['**/dist/**', '**/node_modules/**', '**/.next/**', '**/.vercel/**', '**/bin/**'] },
   {
     languageOptions: {
       globals: {

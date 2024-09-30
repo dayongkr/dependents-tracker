@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { describe, expect, it } from 'vitest';
 import { getNextPageUrl, getRepositories } from '../src/core/scrape';
 
 const html = readFileSync(resolve(import.meta.dirname, './assets/dependents.html'), 'utf-8');

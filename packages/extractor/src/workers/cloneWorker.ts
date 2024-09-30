@@ -1,6 +1,6 @@
 import { parentPort } from 'node:worker_threads';
-import { CloneInfo, cloneRepository } from '../core/repository/clone';
 import { clearRepository } from '../core/repository';
+import { CloneInfo, cloneRepository } from '../core/repository/clone';
 
 type LogMessage = {
   type: 'log';

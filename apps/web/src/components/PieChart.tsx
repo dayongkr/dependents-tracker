@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { Label, Pie, PieChart as PieChartRecharts } from 'recharts';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/shadcn/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/shadcn/chart';
 import { cn } from '@/libs/utils';

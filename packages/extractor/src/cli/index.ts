@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-
 import { resolve } from 'node:path';
 import { Worker } from 'node:worker_threads';
-import { generateDependents } from '../core/scrape';
 import { loadData, Result, saveData } from '../core/data';
+import { generateDependents } from '../core/scrape';
 import type { CloneInDegreeMessage, CloneOutDegreeMessage } from '../workers/cloneWorker';
 import type { ParseInDegreeMessage, ParseOutDegreeMessage } from '../workers/parseWorker';
 

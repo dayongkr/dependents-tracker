@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { GoogleAnalytics } from '@next/third-parties/google';
-import './globals.css';
 import { cn } from '@/libs/utils';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Footer from './_internal/layout/Footer';
 import { GNB } from './_internal/layout/GNB';
+import './globals.css';
 
 const pretendard = localFont({ src: '../fonts/PretendardVariable.subset.woff2', display: 'swap', weight: '45 920' });
 
