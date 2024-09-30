@@ -17,12 +17,13 @@ export function PieChart<T>({
   data: T[];
   title: string;
   description: string;
-  nameKey: string & keyof T;
-  dataKey: string & keyof T;
+  nameKey: keyof T & string;
+  dataKey: keyof T & string;
   donut?: { title: string; description: string };
 }>) {
   const chartConfig: ChartConfig = {};
   const coloredData = data.slice();
+
   for (let index = 0; index < coloredData.length; index++) {
     const item = coloredData[index];
 

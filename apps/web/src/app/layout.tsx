@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { cn } from '@/libs/utils';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Footer from './_internal/layout/Footer';
 import { GNB } from './_internal/layout/GNB';
@@ -21,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(pretendard.className)}>
+      <body className={pretendard.className}>
         <GNB />
         {children}
         <Footer />
