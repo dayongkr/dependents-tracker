@@ -65,7 +65,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
           <BarChart
-            data={getTopN(sortedRepositories, 10)}
+            data={getTopN(sortedSpecifiers, 10)}
             title="Top 10 Specifiers"
             description="Only ESM format imports."
             xDataKey="0"
