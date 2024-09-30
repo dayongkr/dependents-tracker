@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { BarChart } from '@/components/BarChart';
+import { OutBoundLink } from '@/components/OutBoundLink';
 import { PieChart } from '@/components/PieChart';
 import { Section } from '@/components/Section';
 import { DataTable } from '@/components/shadcn/data-table';
@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
-      <Link href="https://github.com/toss/es-toolkit" target="_blank" className="flex items-center gap-1">
+      <OutBoundLink href="https://github.com/toss/es-toolkit" className="flex items-center gap-1">
         <Image
           src="https://avatars.githubusercontent.com/toss"
           alt="toss"
@@ -33,7 +33,7 @@ export default function Home() {
           height={35}
         />
         <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
-      </Link>
+      </OutBoundLink>
       <Section title="Overview" className="gap-3">
         <div className="overflow-x-auto">
           <div className="flex gap-3 text-nowrap">
@@ -50,9 +50,9 @@ export default function Home() {
             <OverviewCard
               title="Most Imported Repository"
               primary={
-                <Link href={`https://github.com/${sortedRepositories[0][0]}`} className="hover:underline">
+                <OutBoundLink href={`https://github.com/${sortedRepositories[0][0]}`} className="hover:underline">
                   {sortedRepositories[0][0]}
-                </Link>
+                </OutBoundLink>
               }
               description={`Imported ${sortedRepositories[0][1]} times.`}
             />

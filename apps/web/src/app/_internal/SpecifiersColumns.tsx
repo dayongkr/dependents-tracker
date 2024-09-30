@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { FileIcon } from '@/components/FileIcon';
+import { OutBoundLink } from '@/components/OutBoundLink';
 import { Specifier } from '@/libs/model/getSpecifiers';
 import type { ColumnDef } from '@tanstack/react-table';
 
@@ -16,9 +17,8 @@ export const SpecifiersColumns: ColumnDef<Specifier>[] = [
     cell: ({ cell }) => {
       const repository = cell.row.original.repository.split('/')[0];
       return (
-        <a
+        <OutBoundLink
           href={`https://github.com/${cell.row.original.repository}`}
-          target="_blank"
           rel="noreferrer"
           className="flex items-center gap-1 hover:underline"
         >
@@ -32,7 +32,7 @@ export const SpecifiersColumns: ColumnDef<Specifier>[] = [
             quality={10}
           />
           {cell.row.original.repository}
-        </a>
+        </OutBoundLink>
       );
     },
   },
@@ -42,10 +42,10 @@ export const SpecifiersColumns: ColumnDef<Specifier>[] = [
     cell: ({ cell }) => {
       const link = `https://github.com/${cell.row.original.repository}/blob/${cell.row.original.hash}${cell.row.original.filename}`;
       return (
-        <a href={link} target="blank" className="flex items-center gap-1 hover:underline">
+        <OutBoundLink href={link} className="flex items-center gap-1 hover:underline">
           <FileIcon filename={cell.row.original.filename} />
           {cell.row.original.filename}
-        </a>
+        </OutBoundLink>
       );
     },
   },

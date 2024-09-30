@@ -1,5 +1,6 @@
 import { Binoculars } from 'lucide-react';
 import Link from 'next/link';
+import { OutBoundLink } from '@/components/OutBoundLink';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
 
 export function GNB() {
@@ -11,9 +12,9 @@ export function GNB() {
         </span>
         <h1>Dependents Tracker</h1>
       </Link>
-      <Link href="https://github.com/dayongkr/dependents-tracker" target="_blank" title="GitHub Repository">
+      <OutBoundLink href="https://github.com/dayongkr/dependents-tracker" target="_blank" title="GitHub Repository">
         <GitHubLogoIcon className="text-muted-foreground hover:text-foreground h-6 w-6" />
-      </Link>
+      </OutBoundLink>
     </nav>
   );
 }
