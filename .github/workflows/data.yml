@@ -24,7 +24,7 @@ jobs:
         run: echo "CONFIG=$(jq -c . < dependents.json)" >> $GITHUB_ENV
 
       - name: Run dependents-tracker extractor
-        run: npx @dependents-tracker/extractor '${{ fromJson(env.CONFIG).package }}' '${{ fromJson(env.CONFIG).path }}'
+        run: npx @dependents-tracker/extractor '${{fromJson(env.CONFIG).owner}}/${{ fromJson(env.CONFIG).package }}' '${{ fromJson(env.CONFIG).path }}/${{ fromJson(env.CONFIG).package}}.json'
 
       - name: Commit and push changes
         run: |

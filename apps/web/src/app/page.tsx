@@ -4,7 +4,7 @@ import { OutBoundLink } from '@/components/OutBoundLink';
 import { PieChart } from '@/components/PieChart';
 import { Section } from '@/components/Section';
 import { DataTable } from '@/components/shadcn/data-table';
-import { PACAKGE, PACKAGE_OWNER } from '@/libs/constants';
+import { OWNER, PACAKGE } from '@/libs/constants';
 import { getSpecifiers } from '@/libs/model/getSpecifiers';
 import { countBy, getTopN, sortBy } from '@/libs/utils';
 import { OverviewCard } from './_internal/OverviewCard';
@@ -24,15 +24,15 @@ export default function Home() {
   const sortedUsers = sortBy(Array.from(countByUsers.entries()), (a, b) => b[1] - a[1]);
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
-      <OutBoundLink href={`https://github.com/${PACAKGE}`} className="flex items-center gap-1">
+      <OutBoundLink href={`https://github.com/${OWNER}/${PACAKGE}`} className="flex items-center gap-1">
         <Image
-          src={`https://avatars.githubusercontent.com/${PACKAGE_OWNER}`}
+          src={`https://avatars.githubusercontent.com/${OWNER}`}
           alt="toss"
           className="rounded-full"
           width={35}
           height={35}
         />
-        <h1 className="text-2xl font-semibold">{PACAKGE}</h1>
+        <h1 className="text-2xl font-semibold">{`${OWNER}/${PACAKGE}`}</h1>
       </OutBoundLink>
       <Section title="Overview" className="gap-3">
         <div className="overflow-x-auto">

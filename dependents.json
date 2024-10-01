@@ -1,4 +1,5 @@
 {
-  "package": "toss/es-toolkit",
-  "path": "apps/web/public/data.json"
+  "owner": "toss",
+  "package": "es-toolkit",
+  "path": "apps/web/public"
 }

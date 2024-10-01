@@ -3,19 +3,17 @@ import { resolve } from 'node:path';
 import unpluginIcons from 'unplugin-icons/webpack';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 
+const config = JSON.parse(readFileSync(resolve(import.meta.dirname, '../../dependents.json'), 'utf-8'));
+
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
-
-const rootMonorepo = resolve(import.meta.dirname ?? __dirname, '../../');
-const configJson = readFileSync(resolve(rootMonorepo, 'dependents.json'), 'utf-8');
-
-const config = JSON.parse(configJson);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
     PACKAGE: config.package,
+    OWNER: config.owner,
   },
   images: {
     remotePatterns: [

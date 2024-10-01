@@ -1,4 +1,6 @@
-import dependentsData from '@public/data.json';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { PACAKGE } from '../constants';
 
 export type Specifier = {
   specifier: string;
@@ -7,7 +9,23 @@ export type Specifier = {
   hash: string;
 };
 
+type DepdentsData = {
+  [key: string]: {
+    imports: {
+      filename: string;
+      specifiers: string[];
+    }[];
+    hash: string;
+  };
+};
+
 export function getSpecifiers(): Specifier[] {
+  const dependentsData: DepdentsData = JSON.parse(
+    readFileSync(resolve(import.meta.dirname ?? __dirname, `../../../public/${PACAKGE}.json`), {
+      encoding: 'utf-8',
+    })
+  );
+
   const specifiers = Object.entries(dependentsData)
     .map(([repository, data]) => ({ repository, ...data }))
     .map((item) =>
