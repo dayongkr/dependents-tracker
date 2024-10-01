@@ -12,7 +12,7 @@ export type Result = {
 };
 
 export function loadData(filename: string): Result {
-  if (!filename || existsSync(resolve(process.cwd(), filename))) {
+  if (!filename || !existsSync(resolve(process.cwd(), filename))) {
     console.log('No data file found');
     return {};
   }
