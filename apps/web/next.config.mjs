@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import unpluginIcons from 'unplugin-icons/webpack';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 
@@ -5,8 +7,16 @@ const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const rootMonorepo = resolve(import.meta.dirname ?? __dirname, '../../');
+const configJson = readFileSync(resolve(rootMonorepo, 'dependents.json'), 'utf-8');
+
+const config = JSON.parse(configJson);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    PACKAGE: config.package,
+  },
   images: {
     remotePatterns: [
       {

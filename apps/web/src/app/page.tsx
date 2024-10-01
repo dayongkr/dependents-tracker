@@ -4,6 +4,7 @@ import { OutBoundLink } from '@/components/OutBoundLink';
 import { PieChart } from '@/components/PieChart';
 import { Section } from '@/components/Section';
 import { DataTable } from '@/components/shadcn/data-table';
+import { PACAKGE, PACKAGE_OWNER } from '@/libs/constants';
 import { getSpecifiers } from '@/libs/model/getSpecifiers';
 import { countBy, getTopN, sortBy } from '@/libs/utils';
 import { OverviewCard } from './_internal/OverviewCard';
@@ -21,18 +22,17 @@ export default function Home() {
   const sortedSpecifiers = sortBy(Array.from(countBySpecifiers.entries()), (a, b) => b[1] - a[1]);
   const sortedExtensions = sortBy(Array.from(countByExtensions.entries()), (a, b) => b[1] - a[1]);
   const sortedUsers = sortBy(Array.from(countByUsers.entries()), (a, b) => b[1] - a[1]);
-
   return (
     <main className="container max-w-7xl overflow-y-auto p-6">
-      <OutBoundLink href="https://github.com/toss/es-toolkit" className="flex items-center gap-1">
+      <OutBoundLink href={`https://github.com/${PACAKGE}`} className="flex items-center gap-1">
         <Image
-          src="https://avatars.githubusercontent.com/toss"
+          src={`https://avatars.githubusercontent.com/${PACKAGE_OWNER}`}
           alt="toss"
           className="rounded-full"
           width={35}
           height={35}
         />
-        <h1 className="text-2xl font-semibold">toss/es-toolkit</h1>
+        <h1 className="text-2xl font-semibold">{PACAKGE}</h1>
       </OutBoundLink>
       <Section title="Overview" className="gap-3">
         <div className="overflow-x-auto">

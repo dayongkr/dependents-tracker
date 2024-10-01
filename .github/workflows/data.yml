@@ -20,8 +20,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Set up config
+        run: echo "CONFIG=$(jq -c . < dependents.json)" >> $GITHUB_ENV
+
       - name: Run dependents-tracker extractor
-        run: npx @dependents-tracker/extractor toss/es-toolkit apps/web/public/data.json
+        run: npx @dependents-tracker/extractor '${{ fromJson(env.CONFIG).package }}' '${{ fromJson(env.CONFIG).path }}'
 
       - name: Commit and push changes
         run: |
