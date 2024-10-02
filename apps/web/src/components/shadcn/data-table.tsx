@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/shadcn/button';
 import { Input } from '@/components/shadcn/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/table';
@@ -24,8 +24,14 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   filter,
-}: DataTableProps<TData, TValue> & { filter?: string }) {
+}: DataTableProps<TData, TValue> & {
+  filter?: {
+    default: string;
+    columnsMap: Record<string, string>;
+  };
+}) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [filterInput, setFilterInput] = useState('');
 
   const table = useReactTable({
     data,
@@ -39,13 +45,28 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  useEffect(() => {
+    if (!filter) {
+      return;
+    }
+
+    table.resetColumnFilters();
+
+    if (filterInput.includes(':')) {
+      const [type, value] = filterInput.split(':');
+      table.getColumn(filter.columnsMap[type])?.setFilterValue(value);
+    } else {
+      table.getColumn(filter.default)?.setFilterValue(filterInput);
+    }
+  }, [filterInput]);
+
   return (
     <div className="flex flex-col gap-3">
       {filter && (
         <Input
-          placeholder={`Filter ${filter}...`}
-          value={(table.getColumn(filter)?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn(filter)?.setFilterValue(event.target.value)}
+          placeholder={`Filter...`}
+          value={filterInput}
+          onChange={(event) => setFilterInput(event.target.value)}
           className="max-w-xs"
         />
       )}

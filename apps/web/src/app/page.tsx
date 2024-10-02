@@ -92,7 +92,19 @@ export default function Home() {
         </div>
       </Section>
       <Section title="Specifiers table">
-        <DataTable columns={SpecifiersColumns} data={specifiers} filter="specifier" />
+        <DataTable
+          columns={SpecifiersColumns}
+          data={specifiers}
+          filter={{
+            default: 'specifier',
+            columnsMap: {
+              repo: 'repository',
+              source: 'filename',
+              repository: 'repository',
+              specifier: 'specifier',
+            },
+          }}
+        />
       </Section>
     </main>
   );
